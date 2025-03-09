@@ -1,9 +1,11 @@
+"use client"
 import { getCurrentUser } from "@/services/AuthService";
 import { TUser } from "@/types";
 import {
   createContext,
   Dispatch,
   SetStateAction,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -14,15 +16,14 @@ type IUserProviderValues = {
   setUser: (user: TUser | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
-const UserContext = createContext<IUserProviderValues>(undefined);
+const UserContext = createContext<IUserProviderValues | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleUser = async () => {
-    const user: TUser | null = await getCurrentUser();
-    console.log(user, "get user");
+    const user = await getCurrentUser();
     setUser(user);
     setIsLoading(false);
   };
@@ -36,3 +37,13 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     </UserContext.Provider>
   );
 };
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (context == undefined) {
+    throw new Error("useUser must be used in the userprovider");
+  }
+  return context;
+};
+
+export default UserProvider;
