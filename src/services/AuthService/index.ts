@@ -1,10 +1,11 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
-
+import { jwtDecode } from "jwt-decode";
 export const registerUser = async (userData: FieldValues) => {
   try {
-    console.log(userData,'from index');
+    console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/auth/register`,
       {
@@ -22,7 +23,7 @@ export const registerUser = async (userData: FieldValues) => {
 };
 export const loginUser = async (userData: FieldValues) => {
   try {
-    console.log(userData,'from index');
+    console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/auth/login`,
       {
@@ -33,8 +34,28 @@ export const loginUser = async (userData: FieldValues) => {
         body: JSON.stringify(userData),
       }
     );
-    return res.json();
+    const result = await res.json();
+
+    // const storeCoockies = await cookies();
+    console.log(
+      (await cookies()).set("accessToken", result?.data?.token),
+      "dksljlkfsjddsjf"
+    );
+    console.log(result, "result ");
+    return result;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getCurrentUser = async () => {
+  const accessToken = (await cookies()).get("accessToken")!.value;
+  let decodedData = null;
+  if (accessToken) {
+    const decodedData = jwtDecode(accessToken);
+    return decodedData;
+  }
+  else{
+    return null;
   }
 };
