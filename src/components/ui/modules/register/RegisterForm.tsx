@@ -15,17 +15,21 @@ import { Button } from "../../button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "./registerValidation";
 import { registerUser } from "@/services/AuthService";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (userData) => {
-    console.log(userData,'from register form');
-
     const res = await registerUser(userData);
-    console.log(res, "reg user");
+    console.log(res);
+    if (res.success === true) {
+      //toast
+      router.push("/login");
+    }
   };
 
   const password = form.watch("password");
