@@ -1,18 +1,15 @@
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 
-
-export default function CustomerLayout({ children }: { children: React.ReactNode }) {
-    return (
-      <html lang="en">
-        <body>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-grow container mx-auto p-4">{children}</main>
-            <Footer />
-          </div>
-        </body>
-      </html>
-    );
-  }
-  
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <div className="flex min-h-screen">
+          {/* Sidebar for admin navigation */}
+          <Sidebar />
+          <main className="flex-grow p-6 bg-gray-50">{children}</main>
+        </div>
+      </body>
+    </html>
+  );
+}
