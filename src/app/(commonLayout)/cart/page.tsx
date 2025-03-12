@@ -1,26 +1,24 @@
+"use client";
 
-
-"use client"; // 👈 Add this
-
-import { removeItem } from "@/components/modules/cart/RemoveItems";
-import { getCartProducts } from "@/services/Cart";
+import { getCartProducts, removeItem } from "@/services/Cart";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const CartPage = () => {
   const [products, setProducts] = useState<any[]>([]);
 
+  const fetchCartProducts = async () => {
+    const cartProducts = await getCartProducts();
+    setProducts(cartProducts?.data || []);
+  };
+
   useEffect(() => {
-    const fetchCartProducts = async () => {
-      const cartProducts = await getCartProducts();
-      setProducts(cartProducts?.data || []);
-    };
     fetchCartProducts();
   }, []);
 
   const handleRemoveItem = async (id: string) => {
     await removeItem(id);
-    // setProducts((prev) => prev.filter((item) => item._id !== id)); // Update state after removal
+    fetchCartProducts();
   };
 
   return (
@@ -45,24 +43,45 @@ const CartPage = () => {
               products.map((item) => (
                 <tr key={item._id} className="text-center">
                   <td className="border px-4 py-2">
-                    <Image width={50} height={50} src={item.product.image} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                    <Image
+                      width={50}
+                      height={50}
+                      src={item.product.image}
+                      alt={item.product.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
                   </td>
                   <td className="border px-4 py-2">{item.product.name}</td>
                   <td className="border px-4 py-2">${item.product.price}</td>
                   <td className="border px-4 py-2">
-                    <button className="btn bg-red-400">-</button> {item.quantity} <button className="btn bg-blue-400">+</button>
+                    <button className="btn bg-red-400">-</button>{" "}
+                    {item.quantity}{" "}
+                    <button className="btn bg-blue-400">+</button>
                   </td>
-                  <td className="border px-4 py-2">${item.product.price * item.quantity}</td>
-                  <td className="border px-4 py-2">{item.product.inStock ? "Yes" : "No"}</td>
-                  <td className="border px-4 py-2">{item.product.requiredPrescription ? "Yes" : "No"}</td>
                   <td className="border px-4 py-2">
-                    <button onClick={() => handleRemoveItem(item._id)} className="btn">Remove</button>
+                    ${item.product.price * item.quantity}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {item.product.inStock ? "Yes" : "No"}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {item.product.requiredPrescription ? "Yes" : "No"}
+                  </td>
+                  <td className="border px-4 py-2">
+                    <button
+                      onClick={() => handleRemoveItem(item._id)}
+                      className="btn"
+                    >
+                      Remove
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={9} className="text-center py-4">No products in the cart</td>
+                <td colSpan={9} className="text-center py-4">
+                  No products in the cart
+                </td>
               </tr>
             )}
           </tbody>

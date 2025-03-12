@@ -47,6 +47,9 @@ const Navbar = () => {
             <li>
               <Link href="/about">About</Link>
             </li>
+            <li>
+              <Link href="/cart">Cart</Link>
+            </li>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -62,6 +65,9 @@ const Navbar = () => {
           <li>
             <Link href="/about">About</Link>
           </li>
+          <li>
+              <Link href="/cart">Cart</Link>
+            </li>
         </ul>
       </div>
       <div className="navbar-end">

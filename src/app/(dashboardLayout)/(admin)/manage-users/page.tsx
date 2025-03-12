@@ -3,7 +3,6 @@ import React from "react";
 
 const Page = async () => {
   const users = await getAllUsers();
-
   return (
     <div className="overflow-x-auto p-5">
       <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
