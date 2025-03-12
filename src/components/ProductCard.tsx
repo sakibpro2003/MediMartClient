@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
 import Link from "next/link";
 import { addToCart } from "@/services/Cart";
 
 const ProductCard = () => {
+  const notify = () => toast("Wow so easy!");
   const handleAddToCart =async (id) => {
     const quantity = "1";
     const payload = {
@@ -15,6 +17,10 @@ const ProductCard = () => {
     };
     const res = await addToCart(payload);
     console.log(res)
+    if(res.success){
+      <ToastContainer />
+      toast.success("Added to cart successfully")
+    }
 
     console.log(id, "id");
   };
@@ -168,3 +174,4 @@ const ProductCard = () => {
 };
 
 export default ProductCard;
+
