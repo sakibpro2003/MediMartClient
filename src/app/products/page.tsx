@@ -1,18 +1,12 @@
-// "use client";
-
-import ProductCard from "@/components/ProductCard";
-
-// import { getAllProducts } from "@/services/AuthService";
-
-// import { getAllProducts } from "@/services/AuthService";
-
-const Page = async () => {
 
 
+import ProductCard from '@/components/ProductCard';
+import React from 'react';
+
+const Page = () => {
   return (
     <div>
-      <h1>Products</h1>
-      <ProductCard></ProductCard>
+      <ProductCard />
     </div>
   );
 };
