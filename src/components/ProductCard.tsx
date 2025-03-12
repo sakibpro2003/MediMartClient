@@ -1,46 +1,3 @@
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import { getAllProducts } from "@/services/AuthService";
-// import Image from "next/image";
-
-// const ProductCard = () => {
-//   const [products, setProducts] = useState<any[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 10; // Show 10 items per page
-
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       try {
-//         const response = await getAllProducts();
-//         if (Array.isArray(response)) {
-//           setProducts(response);
-//         } else if (response?.data && Array.isArray(response.data)) {
-//           setProducts(response.data);
-//         } else {
-//           console.error("Unexpected API response:", response);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching products:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchProducts();
-//   }, []);
-
-//   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
-
-//   // Pagination logic
-//   const totalPages = Math.ceil(products.length / itemsPerPage);
-//   const startIndex = (currentPage - 1) * itemsPerPage;
-//   const selectedProducts = products.slice(startIndex, startIndex + itemsPerPage);
-
-//   return (
-//     <div className="p-6">
-
 
 
 "use client";
@@ -48,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -55,7 +13,7 @@ const ProductCard = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(""); // Search input state
-  const itemsPerPage = 10; // Show 10 items per page
+  const itemsPerPage = 8; // Show 10 items per page
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -152,6 +110,7 @@ const ProductCard = () => {
                   </div>
                 </div>
               </div>
+              <Link href={`/products/${singleMed._id}`} className="btn">{singleMed._id}</Link>
             </div>
           ))
         )}
