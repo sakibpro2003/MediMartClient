@@ -1,8 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { FieldValues } from "react-hook-form";
-import { jwtDecode } from "jwt-decode";
 
 export const getAllProducts = async () => {
   try {

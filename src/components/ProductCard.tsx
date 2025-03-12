@@ -1,13 +1,23 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
 import Link from "next/link";
+import { addToCart } from "@/services/Cart";
 
 const ProductCard = () => {
+  const handleAddToCart =async (id) => {
+    const quantity = "1";
+    const payload = {
+      quantity,
+      product: id,
+    };
+    const res = await addToCart(payload);
+    console.log(res)
+
+    console.log(id, "id");
+  };
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +67,10 @@ const ProductCard = () => {
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const selectedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  const selectedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <div className="p-6">
@@ -110,7 +123,17 @@ const ProductCard = () => {
                   </div>
                 </div>
               </div>
-              <Link href={`/products/${singleMed._id}`} className="btn">{singleMed._id}</Link>
+              <div className="flex justify-center gap-3">
+                <Link href={`/products/${singleMed._id}`} className="btn">
+                  View Details
+                </Link>
+                <button
+                  onClick={() => handleAddToCart(singleMed._id)}
+                  className="btn"
+                >
+                  Add To Cart
+                </button>
+              </div>
             </div>
           ))
         )}
@@ -132,7 +155,9 @@ const ProductCard = () => {
           <button
             className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
           >
             Next
           </button>
