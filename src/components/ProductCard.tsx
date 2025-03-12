@@ -8,22 +8,7 @@ import Link from "next/link";
 import { addToCart } from "@/services/Cart";
 
 const ProductCard = () => {
-  const notify = () => toast("Wow so easy!");
-  const handleAddToCart =async (id) => {
-    const quantity = "1";
-    const payload = {
-      quantity,
-      product: id,
-    };
-    const res = await addToCart(payload);
-    console.log(res)
-    if(res.success){
-      <ToastContainer />
-      toast.success("Added to cart successfully")
-    }
-
-    console.log(id, "id");
-  };
+ 
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -133,12 +118,7 @@ const ProductCard = () => {
                 <Link href={`/products/${singleMed._id}`} className="btn">
                   View Details
                 </Link>
-                <button
-                  onClick={() => handleAddToCart(singleMed._id)}
-                  className="btn"
-                >
-                  Add To Cart
-                </button>
+                
               </div>
             </div>
           ))

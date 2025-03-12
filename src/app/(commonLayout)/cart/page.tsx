@@ -1,0 +1,69 @@
+
+
+import { getCartProducts } from "@/services/Cart";
+import Image from "next/image";
+import React from "react";
+
+const CartPage = async () => {
+    
+  const cartProducts = await getCartProducts();
+  const products = cartProducts?.data || [];
+
+  return (
+    <div className="container mx-auto p-6 h-screen">
+      <h1 className="text-2xl font-bold mb-4">Cart Products</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border px-4 py-2">Image</th>
+              <th className="border px-4 py-2">Name</th>
+              <th className="border px-4 py-2">Price</th>
+              <th className="border px-4 py-2">Quantity</th>
+              <th className="border px-4 py-2">Total Price</th>
+              <th className="border px-4 py-2">In Stock</th>
+              <th className="border px-4 py-2">Prescription Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.length > 0 ? (
+              products.map((item: any) => (
+                <tr key={item._id} className="text-center">
+                  <td className="border px-4 py-2">
+                    <Image
+                    width={50}
+                    height={50}
+                    // layout="full"
+                      src={item.product.image}
+                      alt={item.product.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  </td>
+                  <td className="border px-4 py-2">{item.product.name}</td>
+                  <td className="border px-4 py-2">${item.product.price}</td>
+                  <td className="border px-4 py-2"><button className="btn" >-</button> {item.quantity}      <button  className="btn" >+</button></td>
+                  <td className="border px-4 py-2">${(item.product.price * item.quantity)as number}</td>
+                  <td className="border px-4 py-2">
+                    {item.product.inStock ? "Yes" : "No"}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {item.product.requiredPrescription ? "Yes" : "No"}
+                  </td>
+                  
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={9} className="text-center py-4">
+                  No products in the cart
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default CartPage;

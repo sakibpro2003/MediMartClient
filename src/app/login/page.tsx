@@ -25,8 +25,8 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (loginData) => {
     const res = await loginUser(loginData);
-    console.log(res);
-    if (res.success === true) {
+    console.log(res, "login res");
+    if (res?.success === true) {
       //toast or success notification
       router.push("/"); // Redirect to the dashboard after successful login
     } else {
@@ -47,7 +47,6 @@ const Login = () => {
               <FormItem>
                 <FormLabel />
                 <FormControl>
-                    
                   <Input {...field} value={field.value || ""} />
                 </FormControl>
                 <FormDescription />
