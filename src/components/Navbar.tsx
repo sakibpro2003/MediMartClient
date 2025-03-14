@@ -7,6 +7,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   const user = useUser();
+  console.log(user)
   const router = useRouter();
   const handleLogout = () => {
     logout();
@@ -50,6 +51,9 @@ const Navbar = () => {
             <li>
               <Link href="/cart">Cart</Link>
             </li>
+            <li>
+              <p >{user?.user?.email}</p>
+            </li>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">daisyUI</a>
@@ -68,6 +72,9 @@ const Navbar = () => {
           <li>
               <Link href="/cart">Cart</Link>
             </li>
+            
+              <p >{user?.user?.email}</p>
+            
         </ul>
       </div>
       <div className="navbar-end">

@@ -3,8 +3,6 @@
 import { cookies } from "next/headers";
 
 export const addToCart = async (payload) => {
-  // const token = (await cookies()).get("accessToken");
-  // console.log(token,"token")
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/cart`, {
@@ -20,6 +18,57 @@ export const addToCart = async (payload) => {
     console.log(err);
   }
 };
+// export const increaseItemQuantity = async (_id) => {
+//   const token = (await cookies()).get("accessToken")?.value;
+//   try {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/cart/increase/${_id}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       // body: JSON.stringify(payload),
+//     });
+//     return res.json();
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const increaseItemQuantity = async (_id) => {
+  // const token = (await cookies()).get("accessToken")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
+
+  if (!token) {
+    console.error("No access token found");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/api/cart/increase/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error("Error:", data);
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+};
+
 export const getCartProducts = async () => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
@@ -29,7 +78,6 @@ export const getCartProducts = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      // body: JSON.stringify(payload),
     });
     return res.json();
   } catch (err) {

@@ -35,7 +35,8 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
       const res = await addToCart(payload);
       if (res?.success) {
         toast.success("Added to cart successfully!");
-      } else {
+      } 
+      else {
         toast.error("Failed to add to cart.");
       }
     } catch (error) {

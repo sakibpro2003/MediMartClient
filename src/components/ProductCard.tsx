@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
 import Link from "next/link";
-import { addToCart } from "@/services/Cart";
 
 const ProductCard = () => {
  
@@ -37,7 +35,6 @@ const ProductCard = () => {
   }, []);
 
   useEffect(() => {
-    // Filter products based on search query
     if (!searchQuery) {
       setFilteredProducts(products);
     } else {
@@ -50,7 +47,7 @@ const ProductCard = () => {
       );
       setFilteredProducts(filtered);
     }
-    setCurrentPage(1); // Reset to first page when search changes
+    setCurrentPage(1); 
   }, [searchQuery, products]);
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
@@ -65,7 +62,6 @@ const ProductCard = () => {
 
   return (
     <div className="p-6">
-      {/* Search Input */}
       <div className="mb-6 flex justify-center">
         <input
           type="text"
@@ -76,7 +72,6 @@ const ProductCard = () => {
         />
       </div>
 
-      {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {selectedProducts.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">
