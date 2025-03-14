@@ -1,13 +1,27 @@
 "use client";
 
-import { getCartProducts, increaseItemQuantity, removeItem } from "@/services/Cart";
+import {
+  decreaseItemQuantity,
+  getCartProducts,
+  increaseItemQuantity,
+  removeItem,
+} from "@/services/Cart";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const CartPage = () => {
-  const handleIncrease = (_id) => {
-    const res = increaseItemQuantity(_id);
-    console.log(res,"increase res from frontend");
+  const handleIncrease = async (_id) => {
+    const res = await increaseItemQuantity(_id);
+    if (res.success) {
+      fetchCartProducts();
+    }
+    console.log(_id);
+  };
+  const handleDecrease = async (_id) => {
+    const res = await decreaseItemQuantity(_id);
+    if (res.success) {
+      fetchCartProducts();
+    }
     console.log(_id);
   };
   const [products, setProducts] = useState<any[]>([]);
@@ -16,8 +30,7 @@ const CartPage = () => {
     const cartProducts = await getCartProducts();
     setProducts(cartProducts?.data || []);
   };
-  console.log(products,'cart')
-
+  console.log(products, "cart");
 
   useEffect(() => {
     fetchCartProducts();
@@ -61,7 +74,7 @@ const CartPage = () => {
                   <td className="border px-4 py-2">{item.product.name}</td>
                   <td className="border px-4 py-2">${item.product.price}</td>
                   <td className="border px-4 py-2">
-                    <button className="btn bg-red-400">-</button>{" "}
+                    <button onClick={() => handleDecrease(item?.product?._id)}  className="btn bg-red-400">-</button>{" "}
                     {item.quantity}{" "}
                     <button
                       onClick={() => handleIncrease(item?.product?._id)}

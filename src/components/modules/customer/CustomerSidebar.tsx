@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const AdminSidebar = () => {
+const CustomerSidebar = () => {
   const pathname = usePathname();
 
+  // Define navigation links
   const navItems = [
-    { name: "Manage Medicines", path: "/manage-medicines" },
-    { name: "Manage Orders", path: "/manage-orders" },
-    { name: "Manage Users", path: "/manage-users" },
-    { name: "Manage Payments", path: "/manage-payments" },
+    { name: "My Orders", path: "/my-orders" },
+   
   ];
 
   return (
@@ -34,4 +33,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
+export default CustomerSidebar;

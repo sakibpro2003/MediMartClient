@@ -1,15 +1,15 @@
-import Sidebar from "@/components/Sidebar";
+"use client";
+import CustomerSidebar from "@/components/modules/customer/CustomerSidebar";
+import Navbar from "@/components/Navbar";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
-        <div className="flex min-h-screen">
-          {/* Sidebar for admin navigation */}
-          <Sidebar />
-          <main className="flex-grow p-6 bg-gray-50">{children}</main>
-        </div>
-      </body>
-    </html>
+    <div className="h-screen overflow-hidden flex flex-col">
+      <Navbar />
+      <div className="flex flex-grow overflow-hidden">
+        <CustomerSidebar />
+        <main className="flex-grow p-6 bg-gray-50 overflow-auto">{children}</main>
+      </div>
+    </div>
   );
 }
