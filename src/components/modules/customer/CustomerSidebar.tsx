@@ -4,15 +4,15 @@ import { usePathname } from "next/navigation";
 const CustomerSidebar = () => {
   const pathname = usePathname();
 
-  // Define navigation links
   const navItems = [
+    { name: "Home", path: "/" },
     { name: "My Orders", path: "/my-orders" },
    
   ];
 
   return (
     <aside className="bg-gray-800 text-white p-6">
-      <h2 className="text-xl font-bold mb-6">Admin Dashboard</h2>
+      <h2 className="text-xl font-bold mb-6">Customer Dashboard</h2>
       <nav>
         <ul className="space-y-4">
           {navItems.map((item) => (

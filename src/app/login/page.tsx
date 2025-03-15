@@ -25,9 +25,11 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (loginData) => {
     const res = await loginUser(loginData);
-    console.log(res, "login res");
+    console.log(res, "login result");
     if (res?.success === true) {
       //toast or success notification
+
+
       router.push("/"); // Redirect to the dashboard after successful login
     } else {
       // handle login failure (e.g., show an error message)

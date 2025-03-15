@@ -12,16 +12,18 @@ const Navbar = () => {
   const [currentUser, setCurrentUser] = useState(user?.user || null);
   const [userRole, setUserRole] = useState(user?.user?.role || undefined);
 
-  // Sync local state with user context
   useEffect(() => {
     setCurrentUser(user?.user);
-    setUserRole(user?.user?.role); // Update role when user changes
+    setUserRole(user?.user?.role);
+    // if (user?.user?.role === "admin") {
+    //   router.push("/manage-medicines");
+    // }
   }, [user?.user]);
 
   const handleLogout = () => {
     logout();
     setCurrentUser(null);
-    setUserRole(undefined); // Clear role on logout
+    setUserRole(undefined);
     router.push("/login");
   };
 
@@ -62,18 +64,18 @@ const Navbar = () => {
               <Link href="/cart">Cart</Link>
             </li>
             <li>
-            {userRole === "customer" && (
+              {userRole === "customer" && (
                 <Link className="" href={"/my-orders"}>
                   Customer Dashboard
                 </Link>
-            )}
+              )}
             </li>
             <li>
-            {userRole === "admin" && (
+              {userRole === "admin" && (
                 <Link className="" href={"/manage-orders"}>
                   Admin Dashboard
                 </Link>
-            )}
+              )}
             </li>
           </ul>
         </div>
@@ -95,19 +97,18 @@ const Navbar = () => {
             <Link href="/cart">Cart</Link>
           </li>
           <li>
-          {userRole === "customer" && (
+            {userRole === "customer" && (
               <Link className="" href={"/my-orders"}>
                 Customer Dashboard
               </Link>
-          )}
+            )}
           </li>
           <li>
-
-          {userRole === "admin" && (
-            <Link className="" href={"/manage-orders"}>
-              Admin Dashboard
-            </Link>
-          )}
+            {userRole === "admin" && (
+              <Link className="" href={"/manage-orders"}>
+                Admin Dashboard
+              </Link>
+            )}
           </li>
           {/* {currentUser && <p>{currentUser.email}</p>} */}
         </ul>

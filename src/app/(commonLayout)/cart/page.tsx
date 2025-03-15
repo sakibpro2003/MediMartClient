@@ -6,44 +6,71 @@ import {
   increaseItemQuantity,
   removeItem,
 } from "@/services/Cart";
+import { createOrder } from "@/services/Orders";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const CartPage = () => {
-  const handleIncrease = async (_id) => {
-    const res = await increaseItemQuantity(_id);
-    if (res.success) {
-      fetchCartProducts();
-    }
-    console.log(_id);
-  };
-  const handleDecrease = async (_id) => {
-    const res = await decreaseItemQuantity(_id);
-    if (res.success) {
-      fetchCartProducts();
-    }
-    console.log(_id);
-  };
   const [products, setProducts] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [address, setAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Bkash");
 
   const fetchCartProducts = async () => {
     const cartProducts = await getCartProducts();
     setProducts(cartProducts?.data || []);
   };
-  console.log(products, "cart");
 
   useEffect(() => {
     fetchCartProducts();
   }, []);
+
+  const handleIncrease = async (_id) => {
+    const res = await increaseItemQuantity(_id);
+    if (res.success) {
+      fetchCartProducts();
+    }
+  };
+
+  const handleDecrease = async (_id) => {
+    const res = await decreaseItemQuantity(_id);
+    if (res.success) {
+      fetchCartProducts();
+    }
+  };
 
   const handleRemoveItem = async (id: string) => {
     await removeItem(id);
     fetchCartProducts();
   };
 
+  const handleConfirmOrder = async () => {
+    // console.log("Address:", address);
+    const paymentDetails = {
+      address,
+      paymentMethod,
+    };
+    const res = await createOrder(paymentDetails);
+    if(res.success){
+      toast.success("Order successfully placed")
+    }
+    setIsModalOpen(false);
+    fetchCartProducts();
+
+  };
+
   return (
     <div className="container mx-auto p-6 h-screen">
-      <h1 className="text-2xl font-bold mb-4">Cart Products</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold mb-4">Cart Products</h1>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="btn btn-primary"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300">
           <thead>
@@ -74,8 +101,13 @@ const CartPage = () => {
                   <td className="border px-4 py-2">{item.product.name}</td>
                   <td className="border px-4 py-2">${item.product.price}</td>
                   <td className="border px-4 py-2">
-                    <button onClick={() => handleDecrease(item?.product?._id)}  className="btn bg-red-400">-</button>{" "}
-                    {item.quantity}{" "}
+                    <button
+                      onClick={() => handleDecrease(item?.product?._id)}
+                      className="btn bg-red-400"
+                    >
+                      -
+                    </button>
+                    {item.quantity}
                     <button
                       onClick={() => handleIncrease(item?.product?._id)}
                       className="btn bg-blue-400"
@@ -95,7 +127,7 @@ const CartPage = () => {
                   <td className="border px-4 py-2">
                     <button
                       onClick={() => handleRemoveItem(item._id)}
-                      className="btn"
+                      className="btn bg-red-500 text-white"
                     >
                       Remove
                     </button>
@@ -104,7 +136,7 @@ const CartPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={9} className="text-center py-4">
+                <td colSpan={8} className="text-center py-4">
                   No products in the cart
                 </td>
               </tr>
@@ -112,6 +144,47 @@ const CartPage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Checkout</h2>
+            <label className="block text-sm font-medium mb-1">Address</label>
+            <input
+              type="text"
+              className="input input-bordered w-full mb-4"
+              placeholder="Enter your address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            <label className="block text-sm font-medium mb-1">
+              Payment Method
+            </label>
+            <select
+              className="select select-bordered w-full mb-4"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <option value="Bkash">Bkash</option>
+              <option value="Nagad">Nagad</option>
+              <option value="COD">Cash on Delivery</option>
+              <option value="Card">Credit/Debit Card</option>
+            </select>
+            <div className="flex justify-between mt-4">
+              <button
+                className="btn btn-error"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-success" onClick={handleConfirmOrder}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
