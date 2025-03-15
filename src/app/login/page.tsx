@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const router = useRouter();
@@ -27,12 +28,10 @@ const Login = () => {
     const res = await loginUser(loginData);
     console.log(res, "login result");
     if (res?.success === true) {
-      //toast or success notification
+      toast.success("Login successfull");
 
-
-      router.push("/"); // Redirect to the dashboard after successful login
+      router.push("/");
     } else {
-      // handle login failure (e.g., show an error message)
     }
   };
 
