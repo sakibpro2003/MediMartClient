@@ -33,6 +33,38 @@ export const createOrder = async (paymentDetails) => {
     console.log(err);
   }
 };
+export const getAllOrders = async () => {
+  const token = (await cookies()).get("accessToken")?.value;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/get-all-orders`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      // body: JSON.stringify(paymentDetails),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const changeOrderStatus = async (status,_id) => {
+  const token = (await cookies()).get("accessToken")?.value;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({status:status}),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const logout = async () => {
   (await cookies()).delete("accessToken");

@@ -1,6 +1,5 @@
 "use client";
 import AdminSidebar from "@/components/modules/admin/AdminSidebar";
-import Navbar from "@/components/Navbar";
 
 export default function AdminLayout({
   children,
@@ -9,7 +8,6 @@ export default function AdminLayout({
 }) {
   return (
     <div className="h-screen overflow-hidden flex flex-col">
-      <Navbar></Navbar>
       <div className="flex min-h-screen">
         {/* Sidebar for admin navigation */}
         <AdminSidebar />
