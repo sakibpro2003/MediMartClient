@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) => {
-  const { productId } = use(params); // ✅ Unwrap params
+  const { productId } = use(params); // Unwrap params
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);

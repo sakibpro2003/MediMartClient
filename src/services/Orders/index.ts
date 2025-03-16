@@ -17,6 +17,21 @@ export const getOrders = async () => {
     console.log(err);
   }
 };
+export const getOrdersByAdmin = async (_id) => {
+  const token = (await cookies()).get("accessToken")?.value;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/${_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const createOrder = async (paymentDetails) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
