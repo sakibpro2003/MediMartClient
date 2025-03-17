@@ -7,6 +7,7 @@ const CustomerSidebar = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "My Orders", path: "/my-orders" },
+    { name: "Profile", path: "/profile" },
    
   ];
 
