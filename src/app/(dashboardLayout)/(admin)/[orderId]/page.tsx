@@ -27,19 +27,24 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
             <tbody>
               {orders?.data?.length > 0 ? (
                 orders.data.map((order, index) => (
-                  <tr key={order._id} className="text-center hover:bg-gray-100 transition">
+                  <tr
+                    key={order._id}
+                    className="text-center hover:bg-gray-100 transition"
+                  >
                     <td className="border px-3 py-2">{index + 1}</td>
                     <td className="border px-3 py-2">{order.user.name}</td>
-                    <td className="border px-3 py-2 font-semibold">${order.totalAmount}</td>
+                    <td className="border px-3 py-2 font-semibold">
+                      ${order.totalAmount}
+                    </td>
                     <td
                       className={`border px-3 py-2 font-bold uppercase rounded-lg text-xs py-1 ${
                         order.status === "pending"
                           ? "text-yellow-500"
                           : order.status === "processing"
-                          ? "text-blue-500"
-                          : order.status === "completed"
-                          ? "text-green-500"
-                          : "text-red-500"
+                            ? "text-blue-500"
+                            : order.status === "completed"
+                              ? "text-green-500"
+                              : "text-red-500"
                       }`}
                     >
                       {order.status}
@@ -52,7 +57,10 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
                     </td>
                     <td className="border px-3 py-2 text-left">
                       {order.products.map((product, i) => (
-                        <div key={i} className="flex items-center space-x-2 border-b py-2">
+                        <div
+                          key={i}
+                          className="flex items-center space-x-2 border-b py-2"
+                        >
                           <Image
                             width={40}
                             height={40}
@@ -61,8 +69,12 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
                             className="rounded shadow-md"
                           />
                           <div className="text-left">
-                            <p className="font-semibold text-gray-700">{product.product.name}</p>
-                            <p className="text-xs text-gray-500">Qty: {product.quantity} | ${product.totalPrice}</p>
+                            <p className="font-semibold text-gray-700">
+                              {product.product.name}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Qty: {product.quantity} | ${product.totalPrice}
+                            </p>
                           </div>
                         </div>
                       ))}

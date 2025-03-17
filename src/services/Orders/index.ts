@@ -64,6 +64,22 @@ export const getAllOrders = async () => {
     console.log(err);
   }
 };
+export const getSuccessfulPayments = async () => {
+  const token = (await cookies()).get("accessToken")?.value;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/payments/successful-transactions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      // body: JSON.stringify(paymentDetails),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const changeOrderStatus = async (status,_id) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {

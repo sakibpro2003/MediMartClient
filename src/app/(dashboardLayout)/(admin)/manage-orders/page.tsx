@@ -1,4 +1,3 @@
-
 "use client";
 
 import { changeOrderStatus, getAllOrders } from "@/services/Orders";
@@ -15,7 +14,10 @@ const OrdersPage = () => {
     const fetchOrders = async () => {
       try {
         const allOrders = await getAllOrders();
+        console.log(allOrders,"alloreders")
+        
         setOrders(allOrders.data || []);
+        console.log(orders,'orders')
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
@@ -25,15 +27,15 @@ const OrdersPage = () => {
   }, []);
 
   // Function to update order status (Replace with API call)
-  const handleStatusChange = async(orderId: string, newStatus: string) => {
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
         order._id === orderId ? { ...order, status: newStatus } : order
       )
     );
-    const res = await changeOrderStatus(newStatus,orderId)
-    console.log(res)
-    console.log(newStatus,orderId);
+    const res = await changeOrderStatus(newStatus, orderId);
+    console.log(res);
+    console.log(newStatus, orderId);
   };
 
   return (
@@ -56,24 +58,31 @@ const OrdersPage = () => {
           <tbody>
             {orders.length > 0 ? (
               orders.map((order, index) => (
-                <tr key={order._id} className="text-center hover:bg-gray-100 transition">
+                <tr
+                  key={order._id}
+                  className="text-center hover:bg-gray-100 transition"
+                >
                   <td className="border px-2 py-2">{index + 1}</td>
                   <td className="border px-2 py-2">{order.user.name}</td>
                   <td className="border px-2 py-2">{order.user.email}</td>
-                  <td className="border px-2 py-2 font-semibold">${order.totalAmount}</td>
+                  <td className="border px-2 py-2 font-semibold">
+                    ${order.totalAmount}
+                  </td>
                   <td className="border px-2 py-2">
                     <select
                       className={`px-2 py-1 rounded text-xs font-bold ${
                         order.status === "pending"
                           ? "bg-yellow-100 text-yellow-700"
                           : order.status === "processing"
-                          ? "bg-blue-100 text-blue-700"
-                          : order.status === "completed"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                            ? "bg-blue-100 text-blue-700"
+                            : order.status === "completed"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
                       }`}
                       value={order.status}
-                      onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                      onChange={(e) =>
+                        handleStatusChange(order._id, e.target.value)
+                      }
                     >
                       {statusOptions.map((status) => (
                         <option key={status} value={status}>
@@ -83,7 +92,9 @@ const OrdersPage = () => {
                     </select>
                   </td>
                   <td className="border px-2 py-2">{order.address || "N/A"}</td>
-                  <td className="border px-2 py-2">{order.paymentMethod || "N/A"}</td>
+                  <td className="border px-2 py-2">
+                    {order.paymentMethod || "N/A"}
+                  </td>
                   <td className="border px-2 py-2">
                     {order.products.map((product, i) => (
                       <div key={i} className="flex items-center space-x-2 py-1">
@@ -95,8 +106,12 @@ const OrdersPage = () => {
                           className="rounded shadow-md"
                         />
                         <div className="text-left">
-                          <p className="font-semibold text-gray-700">{product.product.name}</p>
-                          <p className="text-xs text-gray-500">Qty: {product.quantity} | ${product.product.price}</p>
+                          <p className="font-semibold text-gray-700">
+                            {product.product.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            Qty: {product.quantity} | ${product.product.price}
+                          </p>
                         </div>
                       </div>
                     ))}
