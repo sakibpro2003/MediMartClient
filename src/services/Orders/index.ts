@@ -98,7 +98,7 @@ export const changeOrderStatus = async (status,_id) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({status:status}),
+      body: JSON.stringify({status}),
     });
     return res.json();
   } catch (err) {

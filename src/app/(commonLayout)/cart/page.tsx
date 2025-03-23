@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  changePrescriptionStatus,
   decreaseItemQuantity,
   getCartProducts,
   increaseItemQuantity,
@@ -12,6 +13,12 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartPage = () => {
+  const handleUploadPrescription =async (_id)=>{
+    const status = true;
+    console.log(_id)
+    const res = await changePrescriptionStatus(status,_id)
+    console.log(res,"stat5")
+  }
   const [products, setProducts] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [address, setAddress] = useState("");
@@ -68,12 +75,15 @@ const CartPage = () => {
     <div className="container mx-auto p-6 h-screen">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold mb-4">Cart Products</h1>
+        <>
         <button
           onClick={() => setIsModalOpen(true)}
           className="btn btn-primary"
         >
           Proceed to Checkout
         </button>
+        
+        </>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300">
@@ -87,6 +97,7 @@ const CartPage = () => {
               <th className="border px-4 py-2">In Stock</th>
               <th className="border px-4 py-2">Prescription Required</th>
               <th className="border px-4 py-2">Remove Item</th>
+              <th className="border px-4 py-2">upload </th>
             </tr>
           </thead>
           <tbody>
@@ -136,6 +147,7 @@ const CartPage = () => {
                       Remove
                     </button>
                   </td>
+                  <td><button onClick={()=>handleUploadPrescription(item._id)} className="btn">Upload</button></td>
                 </tr>
               ))
             ) : (
