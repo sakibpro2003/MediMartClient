@@ -46,18 +46,22 @@ const CartPage = () => {
   };
 
   const handleConfirmOrder = async () => {
-    // console.log("Address:", address);
+   try{
     const paymentDetails = {
       address,
       paymentMethod,
     };
     const res = await createOrder(paymentDetails);
-    if(res.success){
-      toast.success("Order successfully placed")
+    
+    if(!res.success){
+      toast.error(res.message)
     }
     setIsModalOpen(false);
     fetchCartProducts();
 
+   }catch(err){
+    console.log(err)
+   }
   };
 
   return (

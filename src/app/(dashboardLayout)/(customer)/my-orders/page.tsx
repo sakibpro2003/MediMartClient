@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getOrders } from "@/services/Orders";
-import Image from "next/image";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -40,7 +39,7 @@ const MyOrders = () => {
         <table className="table table-zebra w-full">
           <thead>
             <tr className="bg-gray-200 text-gray-700">
-              <th>Order ID</th>
+              <th>Name</th>
               <th>Products</th>
               <th>Total Amount</th> 
               <th>Status</th>
@@ -49,40 +48,40 @@ const MyOrders = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr className="bg-base-300 p-4" key={order._id}>
-                <td className="font-semibold">{order._id}</td>
+              <tr className="bg-base-300 p-4" key={order?._id}>
+                <td className="font-semibold">{order?._id}</td>
                 <td>
                   <ul>
                     {order.products.map((item) => (
                       <li key={item._id} className="flex items-center gap-2">
-                        <Image
-                          src={item.product.image}
-                          alt={item.product.name}
-                          width={50}
-                          height={50}
-                          className="rounded-lg"
-                        />
+                       {/* <Image
+  src={item?.product?.image || "/placeholder-image.jpg"}
+  alt={item?.product?.name || "Product Image"}
+  width={50}
+  height={50}
+  className="rounded-lg"
+/> */}
                         <div>
-                          <p className="font-medium">{item.product.name}</p>
+                          <p className="font-medium">{item?.product?.name}</p>
                           <p className="text-sm text-gray-500">
-                            Quantity: {item.quantity} | Price: ${item.totalPrice}
+                            Quantity: {item.quantity} | Price: ${item?.totalPrice}
                           </p>
                         </div>
                       </li>
                     ))}
                   </ul>
                 </td>
-                <td className="font-semibold">${order.totalAmount}</td>
+                <td className="font-semibold">${order?.totalAmount}</td>
                 <td>
                   <span
                     className={`px-3 py-1 rounded-md text-white ${
-                      order.status === "pending" ? "bg-yellow-500" : "bg-green-500"
+                      order?.status === "pending" ? "bg-yellow-500" : "bg-green-500"
                     }`}
                   >
-                    {order.status}
+                    {order?.status}
                   </span>
                 </td>
-                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(order?.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

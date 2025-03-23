@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const ProductCard = () => {
  
@@ -13,6 +14,7 @@ const ProductCard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(""); // Search input state
   const itemsPerPage = 8; // Show 10 items per page
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -96,6 +98,7 @@ const ProductCard = () => {
                     <div className="badge badge-secondary ml-2">Rx</div>
                   )}
                 </h2>
+                {/* <p>{singleMed. requiredPrescription}</p> */}
                 <p className="text-sm text-gray-500">{singleMed.description}</p>
                 <p className="text-green-600 font-bold">${singleMed.price}</p>
                 <div className="card-actions justify-between">

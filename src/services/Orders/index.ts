@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { toast } from "react-toastify";
 
 export const getOrders = async () => {
   const token = (await cookies()).get("accessToken")?.value;
@@ -36,6 +37,7 @@ export const createOrder = async (paymentDetails) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order`, {
+      // console.log(res,'res')
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,11 +45,18 @@ export const createOrder = async (paymentDetails) => {
       },
       body: JSON.stringify(paymentDetails),
     });
-    return res.json();
+    const data = await res.json()
+    console.log("data",data,'data')
+    console.log(data.message)
+    return data;
   } catch (err) {
     console.log(err);
   }
 };
+
+
+
+
 export const getAllOrders = async () => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
