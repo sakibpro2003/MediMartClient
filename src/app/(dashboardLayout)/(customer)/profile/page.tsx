@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -56,49 +57,56 @@ const Profile = () => {
         setUpdating(true);
         try {
             const res = await updateUserInfo(token, user);
-            console.log("Updated User:", res);
-            toast.success("Profile updated successfully!");
-        } catch (error) {
-            console.error("Failed to update profile:", error);
-            toast.error("Failed to update profile. Please try again.");
+            if(res.success){
+
+                toast.success("Profile updated successfully!");
+            }
+        } catch (error:any) {
+            toast.error(error.message);
         }
         setUpdating(false);
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading)
+        return <p className="text-center text-lg font-medium text-gray-600">Loading...</p>;
 
     return (
-        <div className="p-5 max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-4">Profile</h2>
-            <div className="mb-3">
-                <label className="block text-gray-700">Name:</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={user.name}
-                    onChange={handleChange}
-                    className="border p-2 w-full rounded"
-                />
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
+            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">My Profile</h2>
+                
+                <div className="mb-4">
+                    <label className="block text-gray-600 font-medium">Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                        className="w-full p-3 border border-gray-300 rounded-lg mt-1 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none"
+                    />
+                </div>
+
+                <div className="mb-6">
+                    <label className="block text-gray-600 font-medium">Phone</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        value={user.phone}
+                        onChange={handleChange}
+                        className="w-full p-3 border border-gray-300 rounded-lg mt-1 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none"
+                    />
+                </div>
+
+                <button
+                    onClick={handleSubmit}
+                    disabled={updating}
+                    className={`w-full py-3 text-white font-semibold rounded-lg transition duration-200 ${
+                        updating ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                    }`}
+                >
+                    {updating ? "Updating..." : "Save Changes"}
+                </button>
             </div>
-            <div className="mb-3">
-                <label className="block text-gray-700">Phone:</label>
-                <input
-                    type="text"
-                    name="phone"
-                    value={user.phone}
-                    onChange={handleChange}
-                    className="border p-2 w-full rounded"
-                />
-            </div>
-            <button
-                onClick={handleSubmit}
-                disabled={updating}
-                className={`bg-blue-500 text-white px-4 py-2 rounded w-full ${
-                    updating ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-            >
-                {updating ? "Updating..." : "Submit"}
-            </button>
         </div>
     );
 };

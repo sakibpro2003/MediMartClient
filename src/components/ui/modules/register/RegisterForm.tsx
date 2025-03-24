@@ -1,144 +1,166 @@
 "use client";
+
 import React from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Input } from "../../input";
-import { Button } from "../../button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "./registerValidation";
 import { registerUser } from "@/services/AuthService";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import Link from "next/link";
 
 const RegisterForm = () => {
   const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirm_password: "",
+    },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (userData) => {
     const res = await registerUser(userData);
-    console.log(res);
-    if (res.success === true) {
-      //toast
+    if (res?.success === true) {
+      toast.success("Registration successful!");
       router.push("/login");
+    } else {
+      toast.error("Registration failed. Please try again.");
     }
   };
 
   const password = form.watch("password");
   const confirm_password = form.watch("confirm_password");
+
   return (
-    <div className="max-w-md border-2 border-green-500 p-4 mx-auto rounded-lg shadow-lg">
-      <h3 className="text-2xl text-center">Register Form</h3>
-      {/*NOTE: providing useForm's all property in shadCn's Form */}
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <label>Name:</label>
-          <FormField
-            // form.control to get all input field's control
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input {...field} value={field.value || " "} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <label>Email:</label>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-6">
+        <h3 className="text-3xl font-semibold text-center text-gray-900 mb-6">
+          Sign Up
+        </h3>
 
-          <FormField
-            // form.control to get all input field's control
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input {...field} value={field.value || " "} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <label>Phone:</label>
-
-          <FormField
-            // form.control to get all input field's control
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input {...field} value={field.value || " "} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <label>Password:</label>
-
-          <FormField
-            // form.control to get all input field's control
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input type="password" {...field} value={field.value || ""} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <label>Confirm Password:</label>
-
-          <FormField
-            // form.control to get all input field's control
-            control={form.control}
-            name="confirm_password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input type="password" {...field} value={field.value || ""} />
-                </FormControl>
-                <FormDescription />
-                {/* if(!password === confirm_password) */}
-                {(password === "" && confirm_password === "") ||
-                !(password === confirm_password) ? (
-                  <FormMessage>Password do not match!</FormMessage>
-                ) : (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            {/* Name Field */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value ?? ""} />
+                  </FormControl>
                   <FormMessage />
-                )}
-              </FormItem>
-            )}
-          />
-          <Button
-            disabled={password === "" && confirm_password === ""}
-            className="w-full"
-            type="submit"
-          >
-            Register
-          </Button>
-        </form>
-      </Form>
+                </FormItem>
+              )}
+            />
+
+            {/* Email Field */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value ?? ""} type="email" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Phone Field */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value ?? ""} type="text" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Password Field */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value ?? ""}
+                      type="password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Confirm Password Field */}
+            <FormField
+              control={form.control}
+              name="confirm_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value ?? ""}
+                      type="password"
+                    />
+                  </FormControl>
+                  {/* Password Match Validation */}
+                  {password && confirm_password && password !== confirm_password ? (
+                    <FormMessage>Passwords do not match!</FormMessage>
+                  ) : (
+                    <FormMessage />
+                  )}
+                </FormItem>
+              )}
+            />
+
+            {/* Register Button */}
+            <Button
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={!password || !confirm_password || password !== confirm_password}
+            >
+              Register
+            </Button>
+
+            {/* Login Redirect */}
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link href="/login" className="text-blue-500 hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };

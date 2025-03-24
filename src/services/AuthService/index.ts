@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 export const registerUser = async (userData: FieldValues) => {
   try {
-    console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/auth/register`,
       {
@@ -17,13 +18,12 @@ export const registerUser = async (userData: FieldValues) => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err:any) {
+    toast.error(err.message);
   }
 };
 export const getAllProducts = async () => {
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products`,
       {
@@ -31,17 +31,15 @@ export const getAllProducts = async () => {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(userData),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err:any) {
+   toast.error(err.message)
   }
 };
 export const loginUser = async (userData: FieldValues) => {
   try {
-    console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/auth/login`,
       {
@@ -54,16 +52,15 @@ export const loginUser = async (userData: FieldValues) => {
     );
     const result = await res.json();
 
-    // const storeCoockies = await cookies();
-    console.log(
-      (await cookies()).set("accessToken", result?.data?.token),
-      "dksljlkfsjddsjf"
-    );
-    console.log(result, "result ");
+    // console.log(
+    //   (await cookies()).set("accessToken", result?.data?.token),
+    //   "dksljlkfsjddsjf"
+    // );
+    // console.log(result, "result ");
     return result;
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err:any) {
+    toast.error(err.message)
+   }
 };
 
 export const getCurrentUser = async () => {

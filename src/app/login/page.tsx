@@ -1,9 +1,9 @@
 "use client";
+
 import React from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,66 +17,109 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const Login = () => {
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (loginData) => {
     const res = await loginUser(loginData);
-    console.log(res, "login result");
     if (res?.success === true) {
-      toast.success("Login successfull");
-
+      toast.success("Login successful");
       router.push("/");
     } else {
+      toast.error("Invalid credentials. Please try again.");
     }
   };
 
   return (
-    <div className="max-w-md border-2 border-blue-500 p-4 mx-auto rounded-lg shadow-lg">
-      <h3 className="text-2xl text-center">Login Form</h3>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <label>Email:</label>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input {...field} value={field.value || ""} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-6 border border-gray-200">
+        <h3 className="text-3xl font-semibold text-center text-gray-900 mb-6">
+          Sign In
+        </h3>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            {/* Email Field */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value ?? ""} // Ensure controlled input
+                      onChange={field.onChange}
+                      type="email"
+                      placeholder="name@company.com"
+                      className="bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <label>Password:</label>
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel />
-                <FormControl>
-                  <Input type="password" {...field} value={field.value || ""} />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            {/* Password Field */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value ?? ""} // Ensure controlled input
+                      onChange={field.onChange}
+                      type="password"
+                      placeholder="••••••••"
+                      className="bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button className="w-full" type="submit">
-            Login
-          </Button>
-        </form>
-      </Form>
+            {/* Forgot Password & Remember Me */}
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <span>Remember me</span>
+              </label>
+              <a href="#" className="text-blue-600 hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            {/* Login Button */}
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              Login
+            </Button>
+
+            {/* Signup Redirect */}
+            <p className="text-center text-sm text-gray-600">
+              Dont have an account?{" "}
+              <Link href="/register" className="text-blue-600 hover:underline">
+                Sign up
+              </Link>
+            </p>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };

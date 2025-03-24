@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
@@ -13,11 +14,12 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartPage = () => {
-  const handleUploadPrescription =async (_id)=>{
+  const handleUploadPrescription =async (_id:string)=>{
     const status = true;
-    console.log(_id)
     const res = await changePrescriptionStatus(status,_id)
-    console.log(res,"stat5")
+    if(res.success){
+      toast.success("Prescription uploaded successfully")
+    }
   }
   const [products, setProducts] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,14 +35,14 @@ const CartPage = () => {
     fetchCartProducts();
   }, []);
 
-  const handleIncrease = async (_id) => {
+  const handleIncrease = async (_id:string) => {
     const res = await increaseItemQuantity(_id);
     if (res.success) {
       fetchCartProducts();
     }
   };
 
-  const handleDecrease = async (_id) => {
+  const handleDecrease = async (_id:string) => {
     const res = await decreaseItemQuantity(_id);
     if (res.success) {
       fetchCartProducts();
@@ -66,8 +68,8 @@ const CartPage = () => {
     setIsModalOpen(false);
     fetchCartProducts();
 
-   }catch(err){
-    console.log(err)
+   }catch(err:any){
+    toast.error(err.message)
    }
   };
 

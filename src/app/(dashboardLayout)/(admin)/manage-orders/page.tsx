@@ -3,6 +3,7 @@
 import { changeOrderStatus, getAllOrders } from "@/services/Orders";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const statusOptions = ["pending", "processing", "completed", "canceled"];
 
@@ -14,10 +15,8 @@ const OrdersPage = () => {
     const fetchOrders = async () => {
       try {
         const allOrders = await getAllOrders();
-        console.log(allOrders,"alloreders")
         
         setOrders(allOrders.data || []);
-        console.log(orders,'orders')
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
@@ -34,8 +33,9 @@ const OrdersPage = () => {
       )
     );
     const res = await changeOrderStatus(newStatus, orderId);
-    console.log(res);
-    console.log(newStatus, orderId);
+    if(res.success){
+      toast.success("Status changed successfully")
+    }
   };
 
   return (

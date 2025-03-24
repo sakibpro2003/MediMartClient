@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
+import { toast } from "react-toastify";
 
 export const addToCart = async (payload) => {
   const token = (await cookies()).get("accessToken")?.value;
@@ -14,12 +16,12 @@ export const addToCart = async (payload) => {
       body: JSON.stringify(payload),
     });
     return res.json();
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err:any) {
+     toast.error(err.message)
+    }
 };
 
-export const changePrescriptionStatus = async (status,_id) => {
+export const changePrescriptionStatus = async (status:string,_id:string) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/submit-prescription/${_id}`, {
@@ -31,12 +33,12 @@ export const changePrescriptionStatus = async (status,_id) => {
       body: JSON.stringify({status:status}),
     });
     return res.json();
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err:any) {
+    toast.error(err.message)
+   }
 };
 
-export const increaseItemQuantity = async (_id) => {
+export const increaseItemQuantity = async (_id:string) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
@@ -69,7 +71,7 @@ export const increaseItemQuantity = async (_id) => {
   }
 };
 
-export const decreaseItemQuantity = async (_id) => {
+export const decreaseItemQuantity = async (_id:string) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
@@ -117,7 +119,7 @@ export const getCartProducts = async () => {
     console.log(err);
   }
 };
-export const removeItem = async (_id) => {
+export const removeItem = async (_id:string) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(
