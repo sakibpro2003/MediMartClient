@@ -52,11 +52,11 @@ export const loginUser = async (userData: FieldValues) => {
     );
     const result = await res.json();
 
-    // console.log(
-    //   (await cookies()).set("accessToken", result?.data?.token),
-    //   "dksljlkfsjddsjf"
-    // );
-    // console.log(result, "result ");
+    console.log(
+      (await cookies()).set("accessToken", result?.data?.token),
+      "dksljlkfsjddsjf"
+    );
+    console.log(result, "result ");
     return result;
   } catch (err:any) {
     toast.error(err.message)

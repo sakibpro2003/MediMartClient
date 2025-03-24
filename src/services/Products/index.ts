@@ -20,6 +20,26 @@ export const getAllProducts = async () => {
     console.log(err);
   }
 };
+export const createProduct = async (payload) => {
+  const token = (await cookies()).get("accessToken")?.value;
+  try {
+    // console.log(userData, "from index");
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/api/products`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const getSingleProduct = async (productId) => {
   try {
     // console.log(userData, "from index");

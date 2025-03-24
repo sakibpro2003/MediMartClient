@@ -1,11 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
 import { getAllProducts, logout } from "@/services/AuthService";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const ManageMedicines = () => {
+
+  // const addMed = ()=>{
+  //   console.log("ok")
+  // }
   const router = useRouter();
   const handleLogout = () => {
     logout();
@@ -37,9 +43,15 @@ const ManageMedicines = () => {
     <div className="p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold mb-4">Manage Medicines</h1>
+        <div className="flex gap-2">
+          <Link href={'/create-new-medicine'} className="btn btn-primary">
+            Add New Medicine
+          </Link>
+
         <button onClick={handleLogout} className="btn">
           Logout
         </button>
+        </div>
       </div>
       {medicines.length === 0 ? (
         <p className="text-gray-500">No medicines available.</p>
