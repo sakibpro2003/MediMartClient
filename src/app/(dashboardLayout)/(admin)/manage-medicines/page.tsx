@@ -67,6 +67,9 @@ const ManageMedicines = () => {
                   <th className="p-3 border">Description</th>
                   <th className="p-3 border">Price</th>
                   <th className="p-3 border">Manufacturer</th>
+                  <th className="p-3 border">Update</th>
+                  <th className="p-3 border">Delete</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -88,6 +91,9 @@ const ManageMedicines = () => {
                     <td className="p-3 border">
                       {med.manufacturer?.name || "Unknown"}
                     </td>
+                    <td><Link className="btn" href={"/update"}>Update</Link></td>
+                    <td><Link className="btn" href={"/delete"}>Delete</Link></td>
+                    {/* <td><button>Delete</button></td> */}
                   </tr>
                 ))}
               </tbody>
