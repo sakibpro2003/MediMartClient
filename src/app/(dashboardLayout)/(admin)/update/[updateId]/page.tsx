@@ -67,11 +67,11 @@ const UpdateProductPage = () => {
 
   const handleUpdate = async () => {
     const res = await updateProduct(product, updateId);
-    console.log(res,'ressss')
-    if (res.success) {
+    console.log(res, "ressss");
+    if (res) {
       toast.success("Medicine updated successfully");
     }
-    router.push('/manage-medicines')
+    router.push("/manage-medicines");
   };
 
   return (

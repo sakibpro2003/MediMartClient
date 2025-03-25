@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation"; // usePathname hook for Next.js 13+ app directory
 import { logout } from "@/services/AuthService";
 import Link from "next/link";
+import clsx from "clsx"; // Make sure to install this
 
 const Navbar = () => {
   const user = useUser();
-  const router = useRouter();
+  const pathname = usePathname(); // Use the pathname hook instead of router
 
   const [currentUser, setCurrentUser] = useState(user?.user || null);
   const [userRole, setUserRole] = useState(user?.user?.role || undefined);
@@ -15,16 +16,22 @@ const Navbar = () => {
   useEffect(() => {
     setCurrentUser(user?.user);
     setUserRole(user?.user?.role);
-    // if (user?.user?.role === "admin") {
-    //   router.push("/manage-medicines");
-    // }
   }, [user?.user]);
 
   const handleLogout = () => {
     logout();
     setCurrentUser(null);
     setUserRole(undefined);
-    router.push("/login");
+    // Redirect to login page after logout
+    window.location.href = "/login";
+  };
+
+  // Function to apply green color to the active link
+  const getLinkClass = (link: string) => {
+    return clsx({
+      "btn btn-sm": pathname === link, // Green for active link
+      "text-black": pathname !== link,     // Black for inactive link
+    });
   };
 
   return (
@@ -52,27 +59,35 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <Link href="/">Home</Link>
+              <Link href="/" className={getLinkClass("/")}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link href="/products">Products</Link>
+              <Link href="/products" className={getLinkClass("/products")}>
+                Products
+              </Link>
             </li>
             <li>
-              <Link href="/about">About</Link>
+              <Link href="/about" className={getLinkClass("/about")}>
+                About
+              </Link>
             </li>
             <li>
-              <Link href="/cart">Cart</Link>
+              <Link href="/cart" className={getLinkClass("/cart")}>
+                Cart
+              </Link>
             </li>
             <li>
               {userRole === "customer" && (
-                <Link className="" href={"/my-orders"}>
+                <Link className={getLinkClass("/my-orders")} href="/my-orders">
                   Customer Dashboard
                 </Link>
               )}
             </li>
             <li>
               {userRole === "admin" && (
-                <Link className="" href={"/manage-orders"}>
+                <Link className={getLinkClass("/manage-orders")} href="/manage-orders">
                   Admin Dashboard
                 </Link>
               )}
@@ -85,32 +100,39 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" className={getLinkClass("/")}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link href="/products">Products</Link>
+            <Link href="/products" className={getLinkClass("/products")}>
+              Products
+            </Link>
           </li>
           <li>
-            <Link href="/about">About</Link>
+            <Link href="/about" className={getLinkClass("/about")}>
+              About
+            </Link>
           </li>
           <li>
-            <Link href="/cart">Cart</Link>
+            <Link href="/cart" className={getLinkClass("/cart")}>
+              Cart
+            </Link>
           </li>
           <li>
             {userRole === "customer" && (
-              <Link className="" href={"/my-orders"}>
+              <Link className={getLinkClass("/my-orders")} href="/my-orders">
                 Customer Dashboard
               </Link>
             )}
           </li>
           <li>
             {userRole === "admin" && (
-              <Link className="" href={"/manage-orders"}>
+              <Link className={getLinkClass("/manage-orders")} href="/manage-orders">
                 Admin Dashboard
               </Link>
             )}
           </li>
-          {/* {currentUser && <p>{currentUser.email}</p>} */}
         </ul>
       </div>
 
@@ -120,7 +142,7 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <button onClick={() => router.push("/login")} className="btn">
+          <button onClick={() => window.location.href = "/login"} className="btn">
             Login
           </button>
         )}

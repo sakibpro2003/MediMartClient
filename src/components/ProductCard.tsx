@@ -83,13 +83,14 @@ const ProductCard = () => {
           selectedProducts.map((singleMed: any) => (
             <div key={singleMed._id} className="card bg-base-100 shadow-lg p-4">
               <figure className="relative rounded-lg w-full h-40">
-                {/* <Image
-                  layout="fill"
+                <Image
+                  width={200}
+                  height={200}
                   src={singleMed?.image}
                   alt={singleMed?.name}
                   objectFit="cover"
                   className="rounded-t-lg"
-                /> */}
+                />
               </figure>
               <div className="card-body">
                 <h2 className="card-title text-lg font-semibold">
