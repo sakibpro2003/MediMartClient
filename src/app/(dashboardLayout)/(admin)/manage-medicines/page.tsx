@@ -6,32 +6,43 @@ import { getAllProducts, logout } from "@/services/AuthService";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { deleteSingleProduct } from "@/services/Products";
 
 const ManageMedicines = () => {
-
-  // const addMed = ()=>{
-  //   console.log("ok")
-  // }
   const router = useRouter();
+  const [medicines, setMedicines] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedMedId, setSelectedMedId] = useState<string | null>(null);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    fetchMedicines();
+  }, []);
+
+  const fetchMedicines = async () => {
+    try {
+      const response = await getAllProducts();
+      setMedicines(response.data || []);
+    } catch (error) {
+      console.error("Error fetching medicines:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!selectedMedId) return;
+    try {
+      await deleteSingleProduct(selectedMedId);
+      setSelectedMedId(null);
+      fetchMedicines(); // Refetch data after deletion
+    } catch (error) {
+      console.error("Error deleting medicine:", error);
+    }
+  };
+
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
-  const [medicines, setMedicines] = useState<any[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllProducts();
-        setMedicines(response.data || []);
-      } catch (error) {
-        console.error("Error fetching medicines:", error);
-      }
-    };
-    fetchData();
-  }, []);
 
   const totalPages = Math.ceil(medicines.length / itemsPerPage);
   const paginatedMeds = medicines.slice(
@@ -44,13 +55,10 @@ const ManageMedicines = () => {
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold mb-4">Manage Medicines</h1>
         <div className="flex gap-2">
-          <Link href={'/create-new-medicine'} className="btn btn-primary">
+          <Link href={"/create-new-medicine"} className="btn btn-primary">
             Add New Medicine
           </Link>
-
-        <button onClick={handleLogout} className="btn">
-          Logout
-        </button>
+          <button onClick={handleLogout} className="btn">Logout</button>
         </div>
       </div>
       {medicines.length === 0 ? (
@@ -69,7 +77,6 @@ const ManageMedicines = () => {
                   <th className="p-3 border">Manufacturer</th>
                   <th className="p-3 border">Update</th>
                   <th className="p-3 border">Delete</th>
-
                 </tr>
               </thead>
               <tbody>
@@ -77,23 +84,25 @@ const ManageMedicines = () => {
                   <tr key={med._id} className="hover:bg-gray-100 transition">
                     <td className="p-3 border">
                       <Image
-                        width={20}
-                        height={20}
-                        src={med.image}
-                        alt={med.name}
+                        width={50}
+                        height={50}
+                        src={med.image && med.image.startsWith("http") ? med.image : "/placeholder.jpg"}
+                        alt={med.name || "No Image"}
                         className="w-12 h-12 object-cover rounded"
                       />
                     </td>
                     <td className="p-3 border">{med.name}</td>
                     <td className="p-3 border">{med.description}</td>
                     <td className="p-3 border">${med.price}</td>
-
-                    <td className="p-3 border">
-                      {med.manufacturer?.name || "Unknown"}
+                    <td className="p-3 border">{med.manufacturer?.name || "Unknown"}</td>
+                    <td>
+                      <Link className="btn" href={`/updateId/${med._id}`}>Update</Link>
                     </td>
-                    <td><Link className="btn" href={"/update"}>Update</Link></td>
-                    <td><Link className="btn" href={"/delete"}>Delete</Link></td>
-                    {/* <td><button>Delete</button></td> */}
+                    <td>
+                      <button className="btn btn-error" onClick={() => setSelectedMedId(med._id)}>
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -109,13 +118,9 @@ const ManageMedicines = () => {
             >
               Previous
             </button>
-            <span className="text-gray-700">
-              Page {currentPage} of {totalPages}
-            </span>
+            <span className="text-gray-700">Page {currentPage} of {totalPages}</span>
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
             >
@@ -123,6 +128,20 @@ const ManageMedicines = () => {
             </button>
           </div>
         </>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {selectedMedId && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold">Confirm Delete</h2>
+            <p>Are you sure you want to delete this medicine?</p>
+            <div className="flex justify-end gap-2 mt-4">
+              <button className="btn" onClick={() => setSelectedMedId(null)}>Cancel</button>
+              <button className="btn btn-error" onClick={handleDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

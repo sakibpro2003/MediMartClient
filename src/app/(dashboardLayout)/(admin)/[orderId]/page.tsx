@@ -37,7 +37,7 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
                       ${order.totalAmount}
                     </td>
                     <td
-                      className={`border px-3 py-2 font-bold uppercase rounded-lg text-xs py-1 ${
+                      className={`border px-3 py-2 font-bold uppercase rounded-lg text-xs${
                         order.status === "pending"
                           ? "text-yellow-500"
                           : order.status === "processing"
