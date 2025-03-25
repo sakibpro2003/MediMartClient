@@ -57,11 +57,11 @@ const Review = () => {
             className="p-6 border rounded-lg shadow-lg bg-white flex flex-col items-center space-y-4"
           >
             {/* Customer Image */}
-            <img
+            {/* <img
               src={review.image}
               alt={review.name}
               className="w-24 h-24 rounded-full border-2 border-gray-300"
-            />
+            /> */}
 
             <div className="text-center">
               {/* Customer Name and Rating */}

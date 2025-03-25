@@ -96,7 +96,7 @@ const ManageMedicines = () => {
                     <td className="p-3 border">${med.price}</td>
                     <td className="p-3 border">{med.manufacturer?.name || "Unknown"}</td>
                     <td>
-                      <Link className="btn" href={`/updateId/${med._id}`}>Update</Link>
+                      <Link className="btn" href={`/update/${med._id}`}>Update</Link>
                     </td>
                     <td>
                       <button className="btn btn-error" onClick={() => setSelectedMedId(med._id)}>

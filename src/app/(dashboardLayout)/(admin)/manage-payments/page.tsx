@@ -1,5 +1,5 @@
 import { getSuccessfulPayments } from "@/services/Orders";
-import Image from "next/image";
+// import Image from "next/image";
 
 const Page = async () => {
   const successfulPayments = await getSuccessfulPayments();
@@ -48,15 +48,15 @@ const Page = async () => {
                   <td className="border px-3 py-2 text-left">
                     {order.products.map((product, i) => (
                       <div key={i} className="flex items-center space-x-2 border-b py-2">
-                        <Image
+                        {/* <Image
                           width={40}
                           height={40}
-                          src={product.product.image}
-                          alt={product.product.name}
+                          src={product?.product?.image}
+                          alt={product.product?.name}
                           className="rounded shadow-md"
-                        />
+                        /> */}
                         <div className="text-left">
-                          <p className="font-semibold text-gray-700">{product.product.name}</p>
+                          <p className="font-semibold text-gray-700">{product.product?.name}</p>
                           <p className="text-xs text-gray-500">Qty: {product.quantity} | ${product.totalPrice}</p>
                         </div>
                       </div>

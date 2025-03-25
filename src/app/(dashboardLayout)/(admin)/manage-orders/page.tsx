@@ -81,7 +81,7 @@ const OrdersPage = () => {
                       }`}
                       value={order.status}
                       onChange={(e) =>
-                        handleStatusChange(order._id, e.target.value)
+                        handleStatusChange(order?._id, e.target.value)
                       }
                     >
                       {statusOptions.map((status) => (
@@ -91,26 +91,26 @@ const OrdersPage = () => {
                       ))}
                     </select>
                   </td>
-                  <td className="border px-2 py-2">{order.address || "N/A"}</td>
+                  <td className="border px-2 py-2">{order?.address || "N/A"}</td>
                   <td className="border px-2 py-2">
                     {order.paymentMethod || "N/A"}
                   </td>
                   <td className="border px-2 py-2">
-                    {order.products.map((product, i) => (
+                    {order?.products.map((product, i) => (
                       <div key={i} className="flex items-center space-x-2 py-1">
-                        <Image
+                        {/* <Image
                           width={40}
                           height={40}
                           src={product.product.image}
                           alt={product.product.name}
                           className="rounded shadow-md"
-                        />
+                        /> */}
                         <div className="text-left">
                           <p className="font-semibold text-gray-700">
-                            {product.product.name}
+                            {product?.product?.name}
                           </p>
                           <p className="text-xs text-gray-500">
-                            Qty: {product.quantity} | ${product.product.price}
+                            Qty: {product?.quantity} | ${product?.product?.price}
                           </p>
                         </div>
                       </div>

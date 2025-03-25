@@ -9,7 +9,7 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
     <div className="p-6 mx-auto max-w-6xl">
       <h1 className="text-2xl font-bold mb-4 text-center">Order History</h1>
 
-      {/* Ensure this div allows scrolling */}
+     
       <div className="overflow-auto w-full">
         <div className="min-w-[800px]">
           <table className="w-full text-sm border border-gray-200">
