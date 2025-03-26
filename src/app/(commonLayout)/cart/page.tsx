@@ -76,11 +76,11 @@ const CartPage = () => {
   return (
     <div className="container mx-auto p-6 h-screen">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-bold mb-4">Cart Products</h1>
+        <h1 className="lg:text-2xl font-bold mb-4">Cart Products</h1>
         <>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="btn btn-primary"
+          className="btn-custom"
         >
           Proceed to Checkout
         </button>
@@ -88,9 +88,9 @@ const CartPage = () => {
         </>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300">
+        <table className="min-w-full border mt-4">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-black text-white">
               <th className="border px-4 py-2">Image</th>
               <th className="border px-4 py-2">Name</th>
               <th className="border px-4 py-2">Price</th>
@@ -117,17 +117,17 @@ const CartPage = () => {
                   </td>
                   <td className="border px-4 py-2">{item.product.name}</td>
                   <td className="border px-4 py-2">${item.product.price}</td>
-                  <td className="border px-4 py-2">
+                  <td className="border px-4  py-2">
                     <button
                       onClick={() => handleDecrease(item?.product?._id)}
-                      className="btn bg-red-400"
+                      className="btn-custom"
                     >
                       -
                     </button>
                     {item.quantity}
                     <button
                       onClick={() => handleIncrease(item?.product?._id)}
-                      className="btn bg-blue-400"
+                      className="btn-custom"
                     >
                       +
                     </button>
@@ -144,12 +144,12 @@ const CartPage = () => {
                   <td className="border px-4 py-2">
                     <button
                       onClick={() => handleRemoveItem(item._id)}
-                      className="btn bg-red-500 text-white"
+                      className="btn-custom"
                     >
                       Remove
                     </button>
                   </td>
-                  <td><button onClick={()=>handleUploadPrescription(item._id)} className="btn">Upload</button></td>
+                  <td><button onClick={()=>handleUploadPrescription(item._id)} className="btn-custom">Upload</button></td>
                 </tr>
               ))
             ) : (
@@ -208,3 +208,5 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+
