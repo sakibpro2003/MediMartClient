@@ -98,9 +98,9 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="font-bold text-3xl">MediMart</a>
+        <a className="font-bold text-xl lg:text-3xl">MediMart</a>
         <Image
-          className="w-12"
+          className="w-8 lg:w-12"
           src={capsuleImg}
           alt="logo"
           width={100}
@@ -158,7 +158,7 @@ const Navbar = () => {
         ) : (
           <button
             onClick={() => (window.location.href = "/login")}
-            className="btn btn-neutral"
+            className="btn-custom lg:w-1/5"
           >
             Login
           </button>

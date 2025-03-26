@@ -4,17 +4,15 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "@/services/AuthService";
 import Image from "next/image";
 import Link from "next/link";
-import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const ProductCard = () => {
- 
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(""); // Search input state
-  const itemsPerPage = 8; // Show 10 items per page
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,12 +47,11 @@ const ProductCard = () => {
       );
       setFilteredProducts(filtered);
     }
-    setCurrentPage(1); 
+    setCurrentPage(1);
   }, [searchQuery, products]);
 
-  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (loading) return <Loader></Loader>;
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedProducts = filteredProducts.slice(
@@ -64,10 +61,11 @@ const ProductCard = () => {
 
   return (
     <div className="p-6">
-      <div className="mb-6 flex justify-center">
+      <div className="mb-6 flex justify-center flex-col items-center content-center">
+        <h3 className="font-bold text-3xl text-center">Search medicine</h3>
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder="Name or symptoms..."
           className="border p-2 rounded-lg w-full max-w-lg"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -82,7 +80,7 @@ const ProductCard = () => {
         ) : (
           selectedProducts.map((singleMed: any) => (
             <div key={singleMed._id} className="card bg-base-100 shadow-lg p-4">
-              <figure className="relative rounded-lg w-full h-40">
+              <figure className="relative rounded-lg w-2/3 mx-auto h-40">
                 <Image
                   width={200}
                   height={200}
@@ -92,14 +90,16 @@ const ProductCard = () => {
                   className="rounded-t-lg"
                 />
               </figure>
-              <div className="card-body">
+              <div className="card-body ">
                 <h2 className="card-title text-lg font-semibold">
                   {singleMed.name}
                   {singleMed.requiredPrescription && (
-                    <div className="badge badge-secondary ml-2">Rx</div>
+                    <div className="bg-black text-white rounded-md text-sm font-light ml-2">
+                      Prescription
+                    </div>
                   )}
                 </h2>
-                {/* <p>{singleMed. requiredPrescription}</p> */}
+                <p>{singleMed.requiredPrescription}</p>
                 <p className="text-sm text-gray-500">{singleMed.description}</p>
                 <p className="text-green-600 font-bold">${singleMed.price}</p>
                 <div className="card-actions justify-between">
@@ -107,28 +107,29 @@ const ProductCard = () => {
                     {singleMed.manufacturer?.name || "Unknown"}
                   </div>
                   <div
-                    className={`badge ${singleMed.inStock ? "badge-success" : "badge-error"}`}
+                    className={`badge ${singleMed.inStock ? "bg-black text-white p-2" : "badge-error"}`}
                   >
                     {singleMed.inStock ? "In Stock" : "Out of Stock"}
                   </div>
                 </div>
               </div>
               <div className="flex justify-center gap-3">
-                <Link href={`/products/${singleMed._id}`} className="btn btn-primary">
+                <Link
+                  href={`/products/${singleMed._id}`}
+                  className="btn-custom"
+                >
                   View Details
                 </Link>
-                
               </div>
             </div>
           ))
         )}
       </div>
 
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-6 space-x-4">
           <button
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+            className="btn-custom disabled:opacity-50"
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
@@ -138,7 +139,7 @@ const ProductCard = () => {
             Page {currentPage} of {totalPages}
           </span>
           <button
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+            className="btn-custom disabled:opacity-50"
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -153,4 +154,3 @@ const ProductCard = () => {
 };
 
 export default ProductCard;
-
