@@ -1,14 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
-import { usePathname } from "next/navigation"; // usePathname hook for Next.js 13+ app directory
+import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/AuthService";
 import Link from "next/link";
-import clsx from "clsx"; // Make sure to install this
+import clsx from "clsx";
+import Image from "next/image";
+import capsuleImg from "../capsule.png";
 
 const Navbar = () => {
+  const router = useRouter();
   const user = useUser();
-  const pathname = usePathname(); // Use the pathname hook instead of router
+  const pathname = usePathname();
 
   const [currentUser, setCurrentUser] = useState(user?.user || null);
   const [userRole, setUserRole] = useState(user?.user?.role || undefined);
@@ -22,15 +25,13 @@ const Navbar = () => {
     logout();
     setCurrentUser(null);
     setUserRole(undefined);
-    // Redirect to login page after logout
-    window.location.href = "/login";
+    router.push("/login");
   };
 
-  // Function to apply green color to the active link
   const getLinkClass = (link: string) => {
     return clsx({
-      "btn btn-sm": pathname === link, // Green for active link
-      "text-black": pathname !== link,     // Black for inactive link
+      "btn btn-neutral btn-sm": pathname === link,
+      "text-black": pathname !== link,
     });
   };
 
@@ -87,14 +88,24 @@ const Navbar = () => {
             </li>
             <li>
               {userRole === "admin" && (
-                <Link className={getLinkClass("/manage-orders")} href="/manage-orders">
+                <Link
+                  className={getLinkClass("/manage-orders")}
+                  href="/manage-orders"
+                >
                   Admin Dashboard
                 </Link>
               )}
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="font-bold text-3xl">MediMart</a>
+        <Image
+          className="w-12"
+          src={capsuleImg}
+          alt="logo"
+          width={100}
+          height={100}
+        ></Image>
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -128,7 +139,10 @@ const Navbar = () => {
           </li>
           <li>
             {userRole === "admin" && (
-              <Link className={getLinkClass("/manage-orders")} href="/manage-orders">
+              <Link
+                className={getLinkClass("/manage-orders")}
+                href="/manage-orders"
+              >
                 Admin Dashboard
               </Link>
             )}
@@ -138,11 +152,14 @@ const Navbar = () => {
 
       <div className="navbar-end">
         {currentUser ? (
-          <button onClick={handleLogout} className="btn">
+          <button onClick={handleLogout} className="btn btn-neutral">
             Logout
           </button>
         ) : (
-          <button onClick={() => window.location.href = "/login"} className="btn">
+          <button
+            onClick={() => (window.location.href = "/login")}
+            className="btn btn-neutral"
+          >
             Login
           </button>
         )}

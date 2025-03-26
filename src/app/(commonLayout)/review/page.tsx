@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface Review {
@@ -49,22 +50,24 @@ const reviews: Review[] = [
 const Review = () => {
   return (
     <div className="max-w-7xl mx-auto p-4">
-      <h2 className="text-2xl font-bold text-center mb-6">Customer Reviews</h2>
+      <h2 className="text-4xl mt-10 font-bold text-center mb-10">Customer Reviews</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((review, index) => (
           <div
             key={index}
             className="p-6 border rounded-lg shadow-lg bg-white flex flex-col items-center space-y-4"
           >
-            {/* Customer Image */}
-            {/* <img
+          
+            <Image
+            width={50}
+            height={50}
               src={review.image}
               alt={review.name}
               className="w-24 h-24 rounded-full border-2 border-gray-300"
-            /> */}
+            />
 
             <div className="text-center">
-              {/* Customer Name and Rating */}
+        
               <div className="mb-2">
                 <h3 className="text-lg font-semibold">{review.name}</h3>
                 <div className="flex justify-center">

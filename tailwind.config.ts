@@ -6,6 +6,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'primary-btn': '#000000',
         border: "hsl(var(--border))",
       },
     },

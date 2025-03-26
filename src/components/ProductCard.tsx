@@ -114,7 +114,7 @@ const ProductCard = () => {
                 </div>
               </div>
               <div className="flex justify-center gap-3">
-                <Link href={`/products/${singleMed._id}`} className="btn">
+                <Link href={`/products/${singleMed._id}`} className="btn btn-primary">
                   View Details
                 </Link>
                 
