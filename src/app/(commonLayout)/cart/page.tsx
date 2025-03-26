@@ -14,13 +14,13 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartPage = () => {
-  const handleUploadPrescription =async (_id:string)=>{
+  const handleUploadPrescription = async (_id: string) => {
     const status = true;
-    const res = await changePrescriptionStatus(status,_id)
-    if(res.success){
-      toast.success("Prescription uploaded successfully")
+    const res = await changePrescriptionStatus(status, _id);
+    if (res.success) {
+      toast.success("Prescription uploaded successfully");
     }
-  }
+  };
   const [products, setProducts] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [address, setAddress] = useState("");
@@ -35,14 +35,14 @@ const CartPage = () => {
     fetchCartProducts();
   }, []);
 
-  const handleIncrease = async (_id:string) => {
+  const handleIncrease = async (_id: string) => {
     const res = await increaseItemQuantity(_id);
     if (res.success) {
       fetchCartProducts();
     }
   };
 
-  const handleDecrease = async (_id:string) => {
+  const handleDecrease = async (_id: string) => {
     const res = await decreaseItemQuantity(_id);
     if (res.success) {
       fetchCartProducts();
@@ -55,22 +55,21 @@ const CartPage = () => {
   };
 
   const handleConfirmOrder = async () => {
-   try{
-    const paymentDetails = {
-      address,
-      paymentMethod,
-    };
-    const res = await createOrder(paymentDetails);
-    
-    if(!res.success){
-      toast.error(res.message)
-    }
-    setIsModalOpen(false);
-    fetchCartProducts();
+    try {
+      const paymentDetails = {
+        address,
+        paymentMethod,
+      };
+      const res = await createOrder(paymentDetails);
 
-   }catch(err:any){
-    toast.error(err.message)
-   }
+      if (!res.success) {
+        toast.error(res.message);
+      }
+      setIsModalOpen(false);
+      fetchCartProducts();
+    } catch (err: any) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -78,13 +77,9 @@ const CartPage = () => {
       <div className="flex justify-between">
         <h1 className="lg:text-2xl font-bold mb-4">Cart Products</h1>
         <>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="btn-custom"
-        >
-          Proceed to Checkout
-        </button>
-        
+          <button onClick={() => setIsModalOpen(true)} className="btn-custom">
+            Proceed to Checkout
+          </button>
         </>
       </div>
       <div className="overflow-x-auto">
@@ -149,7 +144,14 @@ const CartPage = () => {
                       Remove
                     </button>
                   </td>
-                  <td><button onClick={()=>handleUploadPrescription(item._id)} className="btn-custom">Upload</button></td>
+                  <td>
+                    <button
+                      onClick={() => handleUploadPrescription(item._id)}
+                      className="btn-custom"
+                    >
+                      Upload
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -208,5 +210,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
-

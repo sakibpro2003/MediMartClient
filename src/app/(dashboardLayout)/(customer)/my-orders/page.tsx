@@ -31,7 +31,6 @@ const MyOrders = () => {
     return <div className="text-center text-lg font-semibold mt-5">No orders found.</div>;
   }
 
-  // Function to return dynamic color classes based on order status
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
@@ -51,9 +50,9 @@ const MyOrders = () => {
     <div className="container mx-auto px-4 py-6">
       <h2 className="text-2xl font-bold mb-4 text-center">My Orders</h2>
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
+        <table className="table w-full">
           <thead>
-            <tr className="bg-gray-200 text-gray-700">
+            <tr className="bg-black text-white">
               <th>Products</th>
               <th>Total Amount</th> 
               <th>Status</th>
@@ -69,7 +68,7 @@ const MyOrders = () => {
                       <li key={item._id} className="flex items-center gap-2">
                         <div>
                           <p className="font-medium">{item?.product?.name}</p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm">
                             Quantity: {item.quantity} | Price: ${item?.totalPrice}
                           </p>
                         </div>

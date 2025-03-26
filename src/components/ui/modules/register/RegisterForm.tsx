@@ -134,7 +134,9 @@ const RegisterForm = () => {
                     />
                   </FormControl>
                   {/* Password Match Validation */}
-                  {password && confirm_password && password !== confirm_password ? (
+                  {password &&
+                  confirm_password &&
+                  password !== confirm_password ? (
                     <FormMessage>Passwords do not match!</FormMessage>
                   ) : (
                     <FormMessage />
@@ -145,8 +147,10 @@ const RegisterForm = () => {
 
             {/* Register Button */}
             <Button
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              disabled={!password || !confirm_password || password !== confirm_password}
+              className="w-full btn-custom text-white"
+              disabled={
+                !password || !confirm_password || password !== confirm_password
+              }
             >
               Register
             </Button>

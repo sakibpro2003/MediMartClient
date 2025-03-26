@@ -1,4 +1,4 @@
-"use client"; // ✅ Mark as Client Component
+"use client";
 
 import { getAllUsers } from "@/services/Admin";
 import { useRouter } from "next/navigation";
@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 const Page = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
-  // Fetch users when component mounts
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -22,12 +23,17 @@ const Page = () => {
     fetchUsers();
   }, []);
 
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const paginatedUsers = users.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="overflow-x-auto p-5">
       <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
       <table className="table w-full border border-gray-200 shadow-md">
-        {/* Table Head */}
-        <thead className="bg-gray-100">
+        <thead className="bg-black text-white">
           <tr>
             <th>#</th>
             <th>Name</th>
@@ -39,12 +45,11 @@ const Page = () => {
           </tr>
         </thead>
 
-        {/* Table Body */}
         <tbody>
-          {users.length > 0 ? (
-            users.map((user: any, index: number) => (
+          {paginatedUsers.length > 0 ? (
+            paginatedUsers.map((user, index) => (
               <tr key={user._id} className={`${user.isBlocked ? "bg-red-100" : ""}`}>
-                <td>{index + 1}</td>
+                <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td className="capitalize">{user.role}</td>
@@ -57,7 +62,7 @@ const Page = () => {
                 <td>
                   <button
                     onClick={() => router.push(`/${user._id}`)}
-                    className="btn btn-sm btn-primary"
+                    className="btn btn-sm btn-custom"
                   >
                     Order History
                   </button>
@@ -73,6 +78,24 @@ const Page = () => {
           )}
         </tbody>
       </table>
+
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="btn-custom disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="text-gray-700">Page {currentPage} of {totalPages}</span>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className="btn-custom disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

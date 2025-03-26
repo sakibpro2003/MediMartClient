@@ -10,7 +10,6 @@ const statusOptions = ["pending", "processing", "completed", "canceled"];
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
 
-  // Fetch orders on component mount
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -25,7 +24,6 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
-  // Function to update order status (Replace with API call)
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
@@ -43,7 +41,7 @@ const OrdersPage = () => {
       <h1 className="text-xl font-bold mb-3 text-center">Orders Management</h1>
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table className="min-w-full text-sm border border-gray-200">
-          <thead className="bg-blue-600 text-white text-xs">
+          <thead className="bg-black text-white text-xs">
             <tr>
               <th className="border px-2 py-2">#</th>
               <th className="border px-2 py-2">Customer</th>
@@ -98,13 +96,13 @@ const OrdersPage = () => {
                   <td className="border px-2 py-2">
                     {order?.products.map((product, i) => (
                       <div key={i} className="flex items-center space-x-2 py-1">
-                        {/* <Image
+                        <Image
                           width={40}
                           height={40}
                           src={product.product.image}
                           alt={product.product.name}
                           className="rounded shadow-md"
-                        /> */}
+                        />
                         <div className="text-left">
                           <p className="font-semibold text-gray-700">
                             {product?.product?.name}

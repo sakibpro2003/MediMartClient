@@ -1,9 +1,9 @@
-// import { cookies } from "next/headers";
-// import { json } from "stream/consumers";
+"use server";
 
+import { cookies } from "next/headers";
 
-
-export const getUserProfile = async (token: string | null) => {
+export const getUserProfile = async () => {
+    const token = (await cookies()).get("accessToken")?.value;
   if (!token) {
       console.error("No token found");
       return null;
@@ -30,7 +30,9 @@ export const getUserProfile = async (token: string | null) => {
 };
 
 
-export const updateUserInfo = async (token: string | null, payload: { name: string; phone: string }) => {
+export const updateUserInfo = async ( payload: { name: string; phone: string }) => {
+    const token = (await cookies()).get("accessToken")?.value;
+
   if (!token) {
       console.error("No token found");
       return null;
