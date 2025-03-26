@@ -8,8 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) => {
-  const { productId } = use(params); // Unwrap params
-
+  const { productId } = use(params);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,6 +16,7 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
     const fetchProduct = async () => {
       try {
         const response = await getSingleProduct(productId);
+        console.log(response, 'product');
         setProduct(response?.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -35,8 +35,7 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
       const res = await addToCart(payload);
       if (res?.success) {
         toast.success("Added to cart successfully!");
-      } 
-      else {
+      } else {
         toast.error("Failed to add to cart.");
       }
     } catch (error) {
@@ -57,59 +56,64 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
+    <div className="max-w-4xl m-10 mx-auto p-6 bg-white shadow-lg rounded-lg mt-6 border border-gray-300">
       <ToastContainer position="top-right" autoClose={3000} />
 
-      {/* Product Image */}
-      <div className="w-full h-80 relative">
-        <Image
-          src={product?.image || "/placeholder.jpg"}
-          alt={product?.name || "Product Image"}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-lg"
-        />
-      </div>
-
-      {/* Product Details */}
-      <div className="mt-6">
-        <h1 className="text-3xl font-bold">{product?.name || "No Name"}</h1>
-        <p className="text-gray-500 mt-2">{product?.category || "No Category"}</p>
-
-        <p className="text-xl text-green-600 font-semibold mt-4">
-          ${product?.price || "N/A"}
-        </p>
-
-        <p className="mt-4 text-gray-700">{product?.description || "No Description"}</p>
-
-        <div className="mt-6 flex items-center space-x-4">
-          <span
-            className={`px-4 py-2 rounded-lg text-white ${
-              product?.inStock ? "bg-green-500" : "bg-red-500"
-            }`}
-          >
-            {product?.inStock ? "In Stock" : "Out of Stock"}
-          </span>
-
-          {product?.requiredPrescription && (
-            <span className="px-4 py-2 bg-yellow-500 text-white rounded-lg">
-              Prescription Required
-            </span>
-          )}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Product Image */}
+        <div className="flex justify-center items-center">
+          <Image
+            width={300}
+            height={300}
+            src={product?.image || "/placeholder.jpg"}
+            alt={product?.name || "Product Image"}
+            
+          />
         </div>
 
-        <p className="mt-6 text-gray-600">
-          Manufacturer: <span className="font-semibold">{product?.manufacturer?.name || "Unknown"}</span>
-        </p>
+        {/* Product Details */}
+        <div className="text-black">
+          <h1 className="text-3xl font-bold">{product?.name || "No Name"}</h1>
+          <p className="text-gray-700 mt-2">{product?.description || "No Description"}</p>
 
-        {/* Add to Cart Button */}
-        <button
-          onClick={() => handleAddToCart(productId)}
-          className="btn bg-blue-500 text-white px-4 py-2 rounded mt-4"
-        >
-          Add To Cart
-        </button>
+          <p className="text-xl text-black font-semibold mt-4 border-b pb-2 border-gray-300">
+            Price: ${product?.price || "N/A"}
+          </p>
+
+          <p className="mt-2 text-gray-700">Quantity: {product?.quantity || "N/A"}</p>
+
+          <div className="mt-6 flex items-center space-x-4">
+            <span
+              className={`px-4 py-2 rounded-lg text-white text-sm ${
+                product?.inStock ? "bg-black" : "bg-gray-700"
+              }`}
+            >
+              {product?.inStock ? "In Stock" : "Out of Stock"}
+            </span>
+          </div>
+
+          <div className="mt-6 text-gray-700">
+            <p><strong>Manufacturer:</strong> {product?.manufacturer?.name || "Unknown"}</p>
+            <p><strong>Address:</strong> {product?.manufacturer?.address || "N/A"}</p>
+            <p><strong>Contact:</strong> {product?.manufacturer?.contact || "N/A"}</p>
+          </div>
+
+          <p className="mt-2 text-gray-700">Expiry Date: {product?.expiryDate ? new Date(product.expiryDate).toLocaleDateString() : "N/A"}</p>
+
+          {product?.requiredPrescription && (
+            <div className="mt-4 px-4 py-2 bg-gray-800 text-white text-sm rounded-lg">
+              Prescription Required
+            </div>
+          )}
+        </div>
       </div>
+
+      <button
+        onClick={() => handleAddToCart(productId)}
+        className="mt-6 w-full py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-900 transition"
+      >
+        Add To Cart
+      </button>
     </div>
   );
 };
