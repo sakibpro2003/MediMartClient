@@ -24,21 +24,29 @@ const MyOrders = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center text-lg font-semibold mt-5">Loading orders...</div>;
+    return (
+      <div className="text-center text-lg font-semibold mt-5">
+        Loading orders...
+      </div>
+    );
   }
 
   if (orders.length === 0) {
-    return <div className="text-center text-lg font-semibold mt-5">No orders found.</div>;
+    return (
+      <div className="text-center text-lg font-semibold mt-5">
+        No orders found.
+      </div>
+    );
   }
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
-        return "bg-yellow-500"; 
+        return "bg-yellow-500";
       case "processing":
         return "bg-blue-500";
       case "completed":
-        return "bg-green-500"; 
+        return "bg-green-500";
       case "cancelled":
         return "bg-red-500";
       default:
@@ -54,7 +62,7 @@ const MyOrders = () => {
           <thead>
             <tr className="bg-black text-white">
               <th>Products</th>
-              <th>Total Amount</th> 
+              <th>Total Amount</th>
               <th>Status</th>
               <th>Order Date</th>
             </tr>
@@ -69,7 +77,8 @@ const MyOrders = () => {
                         <div>
                           <p className="font-medium">{item?.product?.name}</p>
                           <p className="text-sm">
-                            Quantity: {item.quantity} | Price: ${item?.totalPrice}
+                            Quantity: {item.quantity} | Price: $
+                            {item?.totalPrice}
                           </p>
                         </div>
                       </li>

@@ -1,15 +1,14 @@
-import { getOrdersByAdmin } from "@/services/Orders";
+import { getUserSpecificOrder } from "@/services/Orders";
 import Image from "next/image";
 
 const Page = async ({ params }: { params: { orderId: string } }) => {
-  const { orderId } = params;
-  const orders = await getOrdersByAdmin(orderId);
+  const { orderId } =await params;
+  const orders = await getUserSpecificOrder(orderId);
 
   return (
     <div className="p-6 mx-auto max-w-6xl">
       <h1 className="text-2xl font-bold mb-4 text-center">Order History</h1>
 
-     
       <div className="overflow-auto w-full">
         <div className="min-w-[800px]">
           <table className="w-full text-sm border border-gray-200">

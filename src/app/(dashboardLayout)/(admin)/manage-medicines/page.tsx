@@ -22,7 +22,7 @@ const ManageMedicines = () => {
   const fetchMedicines = async () => {
     try {
       const response = await getAllProducts();
-      setMedicines(response.data || []);
+      setMedicines(response?.data || []);
     } catch (error) {
       console.error("Error fetching medicines:", error);
     }

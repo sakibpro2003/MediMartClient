@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const Page = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
@@ -61,7 +62,7 @@ const Page = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => router.push(`/${user._id}`)}
+                    onClick={() => router.push(`/${user.email}`)}
                     className="btn btn-sm btn-custom"
                   >
                     Order History

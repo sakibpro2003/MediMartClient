@@ -35,7 +35,8 @@ export const getAllProducts = async () => {
     );
     return res.json();
   } catch (err:any) {
-   toast.error(err.message)
+    console.log(err)
+  //  toast.error(err.message)
   }
 };
 export const loginUser = async (userData: FieldValues) => {
