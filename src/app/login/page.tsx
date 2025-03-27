@@ -34,6 +34,7 @@ const Login = () => {
       toast.success("Login successful");
       router.push("/");
     }
+
   };
 
   return (

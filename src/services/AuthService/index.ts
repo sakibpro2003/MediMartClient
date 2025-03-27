@@ -60,7 +60,7 @@ export const loginUser = async (userData: FieldValues) => {
     console.log(result, "result ");
     return result;
   } catch (err:any) {
-    toast.error(err.message)
+    // toast.error(err.message)
    }
 };
 
