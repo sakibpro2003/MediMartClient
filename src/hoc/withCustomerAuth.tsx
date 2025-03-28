@@ -1,23 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import Loader from "@/components/Loader";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const withAuth = (WrappedComponent: React.FC) => {
+const withCustomerAuth = (WrappedComponent: React.FC) => {
   return function ProtectedRoute(props: any) {
     const { user, isLoading } = useUser();
     const router = useRouter();
 
     useEffect(() => {
-      if (!isLoading && !user) {
+      if (!isLoading && !(user?.role === "customer")) {
         router.push("/login");
       }
     }, [user, isLoading, router]);
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loader></Loader>;
 
     return user ? <WrappedComponent {...props} /> : null;
   };
 };
 
-export default withAuth;
+export default withCustomerAuth;

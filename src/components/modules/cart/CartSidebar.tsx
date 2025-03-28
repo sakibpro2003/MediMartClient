@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { IoClose } from "react-icons/io5";
+// import { IoClose } from "react-icons/io5";
 
 interface CartItem {
   _id: string;
@@ -53,7 +53,8 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
       <div className="p-4 flex justify-between items-center border-b">
         <h2 className="text-lg font-semibold">Shopping Cart</h2>
         <button onClick={onClose} className="text-gray-600">
-          <IoClose size={24} />
+          {/* <IoClose size={24} /> */}
+          icon
         </button>
       </div>
 

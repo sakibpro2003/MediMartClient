@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { TOrder } from "@/types/order";
 import { cookies } from "next/headers";
+import { toast } from "react-toastify";
 
 export const getOrders = async () => {
   const token = (await cookies()).get("accessToken")?.value;
@@ -13,23 +16,26 @@ export const getOrders = async () => {
       },
     });
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const getUserSpecificOrder = async (email:string) => {
+export const getUserSpecificOrder = async (email: string) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order/user-order/${email}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/api/order/user-order/${email}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
 export const getOrdersByAdmin = async (email: string) => {
@@ -46,15 +52,14 @@ export const getOrdersByAdmin = async (email: string) => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const createOrder = async (paymentDetails) => {
+export const createOrder = async (paymentDetails:TOrder) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/api/order`, {
-      // console.log(res,'res')
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,11 +68,9 @@ export const createOrder = async (paymentDetails) => {
       body: JSON.stringify(paymentDetails),
     });
     const data = await res.json();
-    console.log("data", data, "data");
-    console.log(data.message);
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
 
@@ -85,8 +88,8 @@ export const getAllOrders = async () => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
 export const getSuccessfulPayments = async () => {
@@ -100,15 +103,14 @@ export const getSuccessfulPayments = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        // body: JSON.stringify(paymentDetails),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const changeOrderStatus = async (status, _id) => {
+export const changeOrderStatus = async (status:boolean, _id:string) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
     const res = await fetch(
@@ -123,8 +125,8 @@ export const changeOrderStatus = async (status, _id) => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
 

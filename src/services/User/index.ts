@@ -45,7 +45,7 @@ export const updateUserInfo = async ( payload: { name: string; phone: string }) 
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(payload), // ✅ Convert payload to JSON string
+          body: JSON.stringify(payload), 
       });
 
       if (!res.ok) {

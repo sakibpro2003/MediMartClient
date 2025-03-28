@@ -18,7 +18,7 @@ export const registerUser = async (userData: FieldValues) => {
       }
     );
     return res.json();
-  } catch (err:any) {
+  } catch (err: any) {
     toast.error(err.message);
   }
 };
@@ -34,9 +34,8 @@ export const getAllProducts = async () => {
       }
     );
     return res.json();
-  } catch (err:any) {
-    console.log(err)
-  //  toast.error(err.message)
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
 export const loginUser = async (userData: FieldValues) => {
@@ -53,15 +52,14 @@ export const loginUser = async (userData: FieldValues) => {
     );
     const result = await res.json();
 
-    console.log(
-      (await cookies()).set("accessToken", result?.data?.token),
-      "dksljlkfsjddsjf"
-    );
+    const coockieSet = await cookies();
+    coockieSet.set("accessToken", result?.data?.token);
+
     console.log(result, "result ");
     return result;
-  } catch (err:any) {
-    // toast.error(err.message)
-   }
+  } catch (err: any) {
+    toast.error(err.message)
+  }
 };
 
 export const getCurrentUser = async () => {

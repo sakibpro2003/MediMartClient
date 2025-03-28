@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { getUserProfile, updateUserInfo } from "@/services/User";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
+import withCustomerAuth from "@/hoc/withCustomerAuth";
 
 const Profile = () => {
     const [user, setUser] = useState<{ name: string; phone: string }>({
@@ -112,4 +113,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default withCustomerAuth(Profile);

@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
+import { toast } from "react-toastify";
 
 export const getAllUsers = async () => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/user/get-all-user`,
       {
@@ -14,29 +15,10 @@ export const getAllUsers = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        // body: JSON.stringify(userData),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err:any) {
+    toast.error(err?.message)
   }
 };
-// export const getAllUsers = async () => {
-//   try {
-//     // console.log(userData, "from index");
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_BASE_API}/api/user/get-all-user`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         // body: JSON.stringify(userData),
-//       }
-//     );
-//     return res.json();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };

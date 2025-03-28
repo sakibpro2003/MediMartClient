@@ -1,7 +1,6 @@
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-6 py-12 bg-white text-black">
-      {/* Hero Section */}
       <section className="text-center">
         <h1 className="text-5xl font-bold">Who We Are</h1>
         <p className="text-lg mt-4 max-w-3xl mx-auto">
@@ -11,7 +10,6 @@ export default function AboutPage() {
         </p>
       </section>
 
-      {/* About Content */}
       <div className="mt-12 flex flex-col md:flex-row items-center gap-12">
         <div className="md:w-1/2 bg-black p-6 rounded-lg text-white text-lg shadow-lg">
           <h3 className="text-2xl font-semibold">Fast, Secure, and Reliable</h3>
@@ -37,7 +35,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Our Values */}
       <section className="mt-16">
         <h2 className="text-3xl font-semibold text-center">Our Core Values</h2>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -85,7 +82,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Contact Information */}
       <section className="mt-16 text-center">
         <h2 className="text-3xl font-semibold">Need Help?</h2>
         <p className="text-lg mt-3">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
 
@@ -7,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { deleteSingleProduct } from "@/services/Products";
+import withAdminAuth from "@/hoc/withAdminAuth";
 
 const ManageMedicines = () => {
   const router = useRouter();
@@ -33,7 +35,7 @@ const ManageMedicines = () => {
     try {
       await deleteSingleProduct(selectedMedId);
       setSelectedMedId(null);
-      fetchMedicines(); 
+      fetchMedicines();
     } catch (error) {
       console.error("Error deleting medicine:", error);
     }
@@ -75,6 +77,7 @@ const ManageMedicines = () => {
                   <th className="p-3 border">Name</th>
                   <th className="p-3 border">Description</th>
                   <th className="p-3 border">Price</th>
+                  <th className="p-3 border">Quantity</th>
                   <th className="p-3 border">Manufacturer</th>
                   <th className="p-3 border">Update</th>
                   <th className="p-3 border">Delete</th>
@@ -101,6 +104,7 @@ const ManageMedicines = () => {
                       {med.description}
                     </td>
                     <td className="p-3 border">${med.price}</td>
+                    <td className="p-3 border">{med.quantity} pcs</td>
                     <td className="p-3 border">
                       {med.manufacturer?.name || "Unknown"}
                     </td>
@@ -154,10 +158,16 @@ const ManageMedicines = () => {
             <h2 className="text-lg font-semibold">Confirm Delete</h2>
             <p>Are you sure you want to delete this medicine?</p>
             <div className="flex justify-end gap-2 mt-4">
-              <button className="btn border-none rounded-sm shadow-none" onClick={() => setSelectedMedId(null)}>
+              <button
+                className="btn border-none rounded-sm shadow-none"
+                onClick={() => setSelectedMedId(null)}
+              >
                 Cancel
               </button>
-              <button className="btn border-none rounded-sm shadow-none bg-red-600" onClick={handleDelete}>
+              <button
+                className="btn border-none rounded-sm shadow-none bg-red-600"
+                onClick={handleDelete}
+              >
                 Delete
               </button>
             </div>
@@ -168,4 +178,4 @@ const ManageMedicines = () => {
   );
 };
 
-export default ManageMedicines;
+export default withAdminAuth(ManageMedicines);

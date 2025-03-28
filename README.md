@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediMart 💊 - Online Medicine E-Commerce Shop
 
-## Getting Started
+## 🚀 Live Demo
+🔗 [MediMart Live Website](#) *(Replace with actual live link)*
 
-First, run the development server:
+## 📌 About MediMart
+MediMart is an online medicine e-commerce platform where users can browse and purchase medicines seamlessly. The platform offers a user-friendly experience, authentication system, order management, and an admin dashboard for handling inventory.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+- 🛒 **E-commerce Functionality** - Browse, search, and purchase medicines.
+- 🔐 **Authentication System** - Secure login and registration (NextAuth.js).
+- 📦 **Order Management** - Track orders, order history, and status updates.
+- 📊 **Admin Dashboard** - Manage products, orders, and users.
+- 💬 **Live Chat Support** *(Coming Soon!)*
+
+## 🛠️ Technologies Used
+- **Frontend**: Next.js 15.1.1, TypeScript, Tailwind CSS, DaisyUI
+- **State Management**: React Context API
+- **Authentication**: NextAuth.js
+- **Styling**: Tailwind CSS + DaisyUI
+- **Deployment**: Vercel
+
+---
+
+## 📥 Installation & Setup
+### 1️⃣ Clone the Repository
+```sh
+  git clone https://github.com/yourusername/MediMart.git
+  cd MediMart
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
+```sh
+  npm install
+  # or
+  yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3️⃣ Set Up Environment Variables
+Create a `.env.local` file in the root directory and add the necessary environment variables:
+```env
+NEXTAUTH_URL=your_deployed_url
+NEXTAUTH_SECRET=your_secret_key
+API_BASE_URL=your_api_url
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4️⃣ Start Development Server
+```sh
+  npm run dev
+  # or
+  yarn dev
+```
+Access the app at: `http://localhost:3000`
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔀 Routing Overview
+### 🏠 Home Page (`/`)
+- Displays featured medicines and categories.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔍 Product Details (`/product/:id`)
+- Shows detailed medicine information with an "Add to Cart" button.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🛒 Cart Page (`/cart`)
+- Displays items added to the cart and checkout options.
 
-## Deploy on Vercel
+### 🔑 Authentication (`/login`, `/register`)
+- Users can log in or register using email and password.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📦 Orders (`/orders`)
+- Customers can track their order history and status.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🎛️ Admin Dashboard (`/admin`)
+- Accessible only to admins, allowing product and order management.
+
+---
+
+## 🚀 Deployment
+MediMart is deployed on **Vercel**.
+To deploy, run:
+```sh
+vercel
+```
+Or push to GitHub, and Vercel will auto-deploy the latest changes.
+
+---
+
+## 🛠️ Troubleshooting & Common Issues
+**Issue:** `Could not find a declaration file for module 'daisyui'`
+**Fix:** Run
+```sh
+npm i --save-dev @types/daisyui
+```
+
+**Issue:** `An error occurred in the Server Components render`
+**Fix:** Check API routes, authentication state, and ensure `useEffect` dependencies are correctly set.
+
+---
+
+## 📄 License
+This project is **MIT Licensed**.
+
+---
+
+## 👨‍💻 Contributing
+Contributions are welcome! Feel free to open issues and pull requests.
+
+### ⭐ Star the Repo!
+If you like this project, don't forget to **star ⭐** the repository!
+

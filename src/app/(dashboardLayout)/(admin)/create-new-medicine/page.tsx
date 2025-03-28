@@ -1,33 +1,64 @@
 "use client";
 
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { createProduct } from "@/services/Products";
+import { TProduct } from "@/types/product";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const ProductForm = () => {
     const router = useRouter()
-  const [product, setProduct] = useState({
-    name: "",
-    image: "",
-    description: "",
-    price: 0,
-    inStock: true,
-    quantity: 0,
-    requiredPrescription: false,
-    expiryDate: "",
-    manufacturer: {
+    const [product, setProduct] = useState<TProduct>({
+      _id: "", // Initially empty, you can set this when the product is fetched or created
       name: "",
-      address: "",
-      contact: "",
-    },
-  });
+      product: {
+        name: "",
+        image: "",
+      },
+      image: "",
+      totalPrice: 0, // You can calculate or set the total price when needed
+      description: "",
+      price: 0,
+      inStock: true,
+      quantity: 0,
+      requiredPrescription: false,
+      expiryDate: "",
+      manufacturer: {
+        name: "",
+        address: "",
+        contact: "",
+      },
+      updated_at: "", // You can set the updated_at when the product is fetched or updated
+    });
+
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value, type, checked } = e.target;
+
+  //   if (name.includes("manufacturer.")) {
+  //     const field = name.split(".")[1];
+  //     setProduct((prev) => ({
+  //       ...prev,
+  //       manufacturer: { ...prev.manufacturer, [field]: value },
+  //     }));
+  //   } else {
+  //     setProduct((prev) => ({
+  //       ...prev,
+  //       [name]: type === "checkbox" ? checked : value,
+  //     }));
+  //   }
+  // };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = e.target;
-
+    const target = e.target as HTMLInputElement; // Explicitly cast target
+  
+    const { name, value, type } = target;
+    const checked = target.checked; // Safe access for checkboxes
+  
     if (name.includes("manufacturer.")) {
       const field = name.split(".")[1];
       setProduct((prev) => ({
@@ -41,16 +72,15 @@ const ProductForm = () => {
       }));
     }
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await createProduct(product);
-    console.log(res, "res create");
     if (res.data._id) {
       toast.success("Medicine added succesfully");
         router.push('/manage-medicines')
     }
-    console.log(product);
   };
 
   return (
@@ -60,7 +90,6 @@ const ProductForm = () => {
           Create New Medicine
         </h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          {/* Left Column */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium">Medicine Name</label>
@@ -122,7 +151,6 @@ const ProductForm = () => {
             </div>
           </div>
 
-          {/* Right Column */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <input
@@ -214,4 +242,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default withAdminAuth(ProductForm);

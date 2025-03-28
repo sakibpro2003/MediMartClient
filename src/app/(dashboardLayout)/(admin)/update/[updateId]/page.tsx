@@ -4,26 +4,51 @@ import { getSingleProduct, updateProduct } from "@/services/Products";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import withAdminAuth from "@/hoc/withAdminAuth";
+import { TProduct } from "@/types/product";
 
 const UpdateProductPage = () => {
   const router = useRouter();
-  const { updateId } = useParams(); // Get the product ID from the URL params
+  const { updateId } = useParams();
 
-  const [product, setProduct] = useState({
-    name: "",
+  // const [product, setProduct] = useState({
+  //   name: "",
+  //   description: "",
+  //   price: "",
+  //   quantity: "",
+  //   expiryDate: "",
+  //   image: "",
+  //   inStock: false,
+  //   requiredPrescription: false,
+  //   manufacturer: {
+  //     name: "",
+  //     address: "",
+  //     contact: "",
+  //   },
+  // });
+  const [product, setProduct] = useState<TProduct>({
+    _id: "",
+    name:"",
+    image:"",
+    product: {
+      name: "",
+      image: "",
+    },
+    totalPrice: 0,
     description: "",
-    price: "",
-    quantity: "",
-    expiryDate: "",
-    image: "",
+    price: 0,
     inStock: false,
+    quantity: 0,
     requiredPrescription: false,
+    expiryDate: "",
     manufacturer: {
       name: "",
       address: "",
       contact: "",
     },
+    updated_at: "",
   });
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,16 +67,29 @@ const UpdateProductPage = () => {
     fetchProduct();
   }, [updateId]);
 
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value, type, checked } = e.target;
+
+  //   setProduct((prev) => ({
+  //     ...prev,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   }));
+  // };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = e.target;
-
+    const { name, value, type } = e.target;
+    const isCheckbox = type === "checkbox";
+  
     setProduct((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
     }));
   };
+  
 
   const handleManufacturerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,7 +105,6 @@ const UpdateProductPage = () => {
 
   const handleUpdate = async () => {
     const res = await updateProduct(product, updateId);
-    console.log(res, "ressss");
     if (res) {
       toast.success("Medicine updated successfully");
     }
@@ -245,4 +282,4 @@ const UpdateProductPage = () => {
   );
 };
 
-export default UpdateProductPage;
+export default withAdminAuth(UpdateProductPage);

@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { changeOrderStatus, getAllOrders } from "@/services/Orders";
+import { TOrder } from "@/types/order";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -8,15 +11,14 @@ import { toast } from "react-toastify";
 const statusOptions = ["pending", "processing", "completed", "canceled"];
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState([]);
-  console.log(orders,'orders usestate')
+  const [orders, setOrders] = useState<TOrder[]>([]);
+
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const allOrders = await getAllOrders();
-        console.log(allOrders,'allorders')
-        
+
         setOrders(allOrders.data || []);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
@@ -26,15 +28,15 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
-  const handleStatusChange = async (orderId: string, newStatus: string) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
+  const handleStatusChange = async (orderId: string, newStatus: boolean) => {
+    setOrders((prevOrders:any) =>
+      prevOrders.map((order:TOrder) =>
         order._id === orderId ? { ...order, status: newStatus } : order
       )
     );
     const res = await changeOrderStatus(newStatus, orderId);
-    if(res.success){
-      toast.success("Status changed successfully")
+    if (res.success) {
+      toast.success("Status changed successfully");
     }
   };
 
@@ -47,11 +49,11 @@ const OrdersPage = () => {
             <tr>
               <th className="border px-2 py-2">#</th>
               <th className="border px-2 py-2">Customer</th>
-              <th className="border px-2 py-2">Email</th>
+              {/* <th className="border px-2 py-2">Email</th> */}
               <th className="border px-2 py-2">Total ($)</th>
               <th className="border px-2 py-2">Status</th>
               <th className="border px-2 py-2">Address</th>
-              <th className="border px-2 py-2">Payment</th>
+              {/* <th className="border px-2 py-2">Payment</th> */}
               <th className="border px-2 py-2">Products</th>
             </tr>
           </thead>
@@ -64,7 +66,7 @@ const OrdersPage = () => {
                 >
                   <td className="border px-2 py-2">{index + 1}</td>
                   <td className="border px-2 py-2">{order?.user?.name}</td>
-                  <td className="border px-2 py-2">{order?.user?.email}</td>
+                  {/* <td className="border px-2 py-2">{order?.user?.email}</td> */}
                   <td className="border px-2 py-2 font-semibold">
                     ${order?.totalAmount}
                   </td>
@@ -81,7 +83,7 @@ const OrdersPage = () => {
                       }`}
                       value={order?.status}
                       onChange={(e) =>
-                        handleStatusChange(order?._id, e.target.value)
+                        handleStatusChange(order?._id, e.target.value as any)
                       }
                     >
                       {statusOptions.map((status) => (
@@ -91,7 +93,9 @@ const OrdersPage = () => {
                       ))}
                     </select>
                   </td>
-                  <td className="border px-2 py-2">{order?.address || "N/A"}</td>
+                  <td className="border px-2 py-2">
+                    {order?.address || "N/A"}
+                  </td>
                   <td className="border px-2 py-2">
                     {order.paymentMethod || "N/A"}
                   </td>
@@ -110,7 +114,8 @@ const OrdersPage = () => {
                             {product?.product?.name}
                           </p>
                           <p className="text-xs text-gray-500">
-                            Qty: {product?.quantity} | ${product?.product?.price}
+                            Qty: {product?.quantity} | $
+                            {/* {product?.product?.price} */}
                           </p>
                         </div>
                       </div>
@@ -132,4 +137,4 @@ const OrdersPage = () => {
   );
 };
 
-export default OrdersPage;
+export default withAdminAuth(OrdersPage);

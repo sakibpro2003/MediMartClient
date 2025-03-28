@@ -29,7 +29,6 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (loginData) => {
     const res = await loginUser(loginData);
-    console.log(res, "login result");
     if (res?.success === true) {
       toast.success("Login successful");
       router.push("/");

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import withCustomerAuth from "@/hoc/withCustomerAuth";
 import {
   changePrescriptionStatus,
   decreaseItemQuantity,
@@ -9,13 +10,14 @@ import {
   removeItem,
 } from "@/services/Cart";
 import { createOrder } from "@/services/Orders";
+import { TOrder } from "@/types/order";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartPage = () => {
   const handleUploadPrescription = async (_id: string) => {
-    const status = true;
+    const status: boolean = true;
     const res = await changePrescriptionStatus(status, _id);
     if (res.success) {
       toast.success("Prescription uploaded successfully");
@@ -56,15 +58,43 @@ const CartPage = () => {
 
   const handleConfirmOrder = async () => {
     try {
-      const paymentDetails = {
-        address,
-        paymentMethod,
+      if (products.length === 0) {
+        toast.error("Your cart is empty!");
+        return;
+      }
+
+      const newOrder: TOrder = {
+        _id: "",
+        user: { _id: "", name: "" },
+        products: products.map((item) => ({
+          product: {
+            _id: item.product._id,
+            name: item.product.name,
+            image: item.product.image,
+          },
+          quantity: item.quantity,
+          totalPrice: item.product.price * item.quantity,
+          _id: item._id,
+        })),
+        address: address,
+        paymentMethod: paymentMethod,
+        totalAmount: products.reduce(
+          (total, item) => total + item.product.price * item.quantity,
+          0
+        ),
+        status: "processing",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
-      const res = await createOrder(paymentDetails);
+
+      const res = await createOrder(newOrder);
 
       if (!res.success) {
         toast.error(res.message);
+        return;
       }
+
+      toast.success("Order placed successfully!");
       setIsModalOpen(false);
       fetchCartProducts();
     } catch (err: any) {
@@ -209,4 +239,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default withCustomerAuth(CartPage);

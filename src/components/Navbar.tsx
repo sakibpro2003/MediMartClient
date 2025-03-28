@@ -135,10 +135,11 @@ const Navbar = () => {
               <Link className={getLinkClass("/my-orders")} href="/my-orders">
                 Customer Dashboard
               </Link>
-            )}{userRole === "admin" && (
+            )}
+            {userRole === "admin" && (
               <Link
-                className={getLinkClass("/manage-orders")}
-                href="/manage-orders"
+                className={getLinkClass("/manage-medicines")}
+                href="/manage-medicines"
               >
                 Admin Dashboard
               </Link>

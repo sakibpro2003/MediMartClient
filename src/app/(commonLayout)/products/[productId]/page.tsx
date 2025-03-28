@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { addToCart } from "@/services/Cart";
@@ -7,7 +8,11 @@ import React, { useEffect, useState, use } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) => {
+const ProductDetails = ({
+  params,
+}: {
+  params: Promise<{ productId: string }>;
+}) => {
   const { productId } = use(params);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +21,6 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
     const fetchProduct = async () => {
       try {
         const response = await getSingleProduct(productId);
-        console.log(response, 'product');
         setProduct(response?.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -28,8 +32,13 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
     fetchProduct();
   }, [productId]);
 
+  type TAddCart = {
+    quantity: number;
+    product: string;
+  };
+
   const handleAddToCart = async (id: string) => {
-    const payload = { quantity: 1, product: id };
+    const payload: TAddCart = { quantity: 1, product: id };
 
     try {
       const res = await addToCart(payload);
@@ -38,8 +47,8 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
       } else {
         toast.error("Failed to add to cart.");
       }
-    } catch (error) {
-      toast.error("An error occurred while adding to cart.");
+    } catch (err: any) {
+      toast.error(err.message);
     }
   };
 
@@ -67,20 +76,23 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
             height={300}
             src={product?.image || "/placeholder.jpg"}
             alt={product?.name || "Product Image"}
-            
           />
         </div>
 
         {/* Product Details */}
         <div className="text-black">
           <h1 className="text-3xl font-bold">{product?.name || "No Name"}</h1>
-          <p className="text-gray-700 mt-2">{product?.description || "No Description"}</p>
+          <p className="text-gray-700 mt-2">
+            {product?.description || "No Description"}
+          </p>
 
           <p className="text-xl text-black font-semibold mt-4 border-b pb-2 border-gray-300">
             Price: ${product?.price || "N/A"}
           </p>
 
-          <p className="mt-2 text-gray-700">Quantity: {product?.quantity || "N/A"}</p>
+          <p className="mt-2 text-gray-700">
+            Quantity: {product?.quantity || "N/A"}
+          </p>
 
           <div className="mt-6 flex items-center space-x-4">
             <span
@@ -93,12 +105,26 @@ const ProductDetails = ({ params }: { params: Promise<{ productId: string }> }) 
           </div>
 
           <div className="mt-6 text-gray-700">
-            <p><strong>Manufacturer:</strong> {product?.manufacturer?.name || "Unknown"}</p>
-            <p><strong>Address:</strong> {product?.manufacturer?.address || "N/A"}</p>
-            <p><strong>Contact:</strong> {product?.manufacturer?.contact || "N/A"}</p>
+            <p>
+              <strong>Manufacturer:</strong>{" "}
+              {product?.manufacturer?.name || "Unknown"}
+            </p>
+            <p>
+              <strong>Address:</strong>{" "}
+              {product?.manufacturer?.address || "N/A"}
+            </p>
+            <p>
+              <strong>Contact:</strong>{" "}
+              {product?.manufacturer?.contact || "N/A"}
+            </p>
           </div>
 
-          <p className="mt-2 text-gray-700">Expiry Date: {product?.expiryDate ? new Date(product.expiryDate).toLocaleDateString() : "N/A"}</p>
+          <p className="mt-2 text-gray-700">
+            Expiry Date:{" "}
+            {product?.expiryDate
+              ? new Date(product.expiryDate).toLocaleDateString()
+              : "N/A"}
+          </p>
 
           {product?.requiredPrescription && (
             <div className="mt-4 px-4 py-2 bg-gray-800 text-white text-sm rounded-lg">

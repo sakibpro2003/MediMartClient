@@ -1,8 +1,23 @@
-import { getSuccessfulPayments } from "@/services/Orders";
-import Image from "next/image";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-const Page = async () => {
-  const successfulPayments = await getSuccessfulPayments();
+import withAdminAuth from "@/hoc/withAdminAuth";
+import { getSuccessfulPayments } from "@/services/Orders";
+import { TProduct } from "@/types/product";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const ManagePayments = () => {
+  const [successfulPayments, setSuccessfulPayments] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchPayments = async () => {
+      const res = await getSuccessfulPayments();
+      setSuccessfulPayments(res?.data || []);
+    };
+
+    fetchPayments();
+  }, []);
 
   return (
     <div className="p-5">
@@ -25,8 +40,8 @@ const Page = async () => {
             </tr>
           </thead>
           <tbody>
-            {successfulPayments?.data?.length > 0 ? (
-              successfulPayments.data.map((order, index) => (
+            {successfulPayments.length > 0 ? (
+              successfulPayments.map((order, index) => (
                 <tr
                   key={order._id}
                   className="text-center hover:bg-gray-100 transition"
@@ -48,7 +63,11 @@ const Page = async () => {
                   </td>
                   <td className="border px-3 py-2">{order.paymentMethod}</td>
                   <td
-                    className={`border px-3 py-2 font-bold uppercase text-xs py-1 ${order.status === "completed" ? "text-green-500" : "text-red-500"}`}
+                    className={`border px-3 py-2 font-bold uppercase text-xs py-1 ${
+                      order.status === "completed"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
                   >
                     {order.status}
                   </td>
@@ -59,7 +78,7 @@ const Page = async () => {
                     {new Date(order.updatedAt).toLocaleString()}
                   </td>
                   <td className="border px-3 py-2 text-left">
-                    {order.products.map((product, i) => (
+                    {order.products.map((product:TProduct, i:number) => (
                       <div
                         key={i}
                         className="flex items-center space-x-2 border-b py-2"
@@ -98,4 +117,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default withAdminAuth(ManagePayments);

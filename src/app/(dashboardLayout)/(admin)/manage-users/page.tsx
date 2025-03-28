@@ -1,10 +1,12 @@
 "use client";
 
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { getAllUsers } from "@/services/Admin";
+import { TUser } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const Page = () => {
+const ManageUsers = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
   
@@ -48,7 +50,7 @@ const Page = () => {
 
         <tbody>
           {paginatedUsers.length > 0 ? (
-            paginatedUsers.map((user, index) => (
+            paginatedUsers.map((user:TUser, index) => (
               <tr key={user._id} className={`${user.isBlocked ? "bg-red-100" : ""}`}>
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{user.name}</td>
@@ -101,4 +103,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAdminAuth(ManageUsers);

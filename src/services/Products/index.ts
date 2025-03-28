@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { TProduct } from "@/types/product";
+// import { TOrder } from "@/app/(dashboardLayout)/(admin)/[orderId]/page";
 import { cookies } from "next/headers";
+import { toast } from "react-toastify";
 
 export const getAllProducts = async () => {
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products`,
       {
@@ -12,36 +15,17 @@ export const getAllProducts = async () => {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(userData),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-// export const getSingleProduct = async (_id) => {
-//   try {
-//     // console.log(userData, "from index");
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_BASE_API}/api/products/${_id}`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         // body: JSON.stringify(userData),
-//       }
-//     );
-//     return res.json();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-export const createProduct = async (payload) => {
+
+export const createProduct = async (payload:TProduct) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products`,
       {
@@ -54,14 +38,13 @@ export const createProduct = async (payload) => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const updateProduct = async (payload,id) => {
+export const updateProduct = async (payload:TProduct, id:any) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products/${id}`,
       {
@@ -74,14 +57,13 @@ export const updateProduct = async (payload,id) => {
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const deleteSingleProduct = async (_id) => {
+export const deleteSingleProduct = async (_id:string) => {
   const token = (await cookies()).get("accessToken")?.value;
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products/${_id}`,
       {
@@ -90,17 +72,15 @@ export const deleteSingleProduct = async (_id) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        // body: JSON.stringify(payload),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-export const getSingleProduct = async (productId) => {
+export const getSingleProduct = async (productId:any) => {
   try {
-    // console.log(userData, "from index");
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/products/${productId}`,
       {
@@ -108,17 +88,13 @@ export const getSingleProduct = async (productId) => {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(userData),
       }
     );
     return res.json();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    toast.error(err.message);
   }
 };
-
-
-
 
 export const logout = async () => {
   (await cookies()).delete("accessToken");

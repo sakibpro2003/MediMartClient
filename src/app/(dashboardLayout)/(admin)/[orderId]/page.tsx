@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getUserSpecificOrder } from "@/services/Orders";
+import { TOrder } from "@/types/order";
 import Image from "next/image";
 
-const Page = async ({ params }: { params: { orderId: string } }) => {
-  const { orderId } =await params;
+const Page = async ({ params }: any) => {
+  const { orderId } = params;
   const orders = await getUserSpecificOrder(orderId);
 
   return (
@@ -25,7 +27,7 @@ const Page = async ({ params }: { params: { orderId: string } }) => {
             </thead>
             <tbody>
               {orders?.data?.length > 0 ? (
-                orders.data.map((order, index) => (
+                orders.data.map((order: TOrder, index: number) => (
                   <tr
                     key={order._id}
                     className="text-center hover:bg-gray-100 transition"
