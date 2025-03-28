@@ -1,7 +1,7 @@
 # MediMart 💊 - Online Medicine E-Commerce Shop
 
 ## 🚀 Live Demo
-🔗 [MediMart Live Website](#) *(Replace with actual live link)*
+🔗 [https://medi-mart-client-lilac.vercel.app](#)
 
 ## 📌 About MediMart
 MediMart is an online medicine e-commerce platform where users can browse and purchase medicines seamlessly. The platform offers a user-friendly experience, authentication system, order management, and an admin dashboard for handling inventory.
