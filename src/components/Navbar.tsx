@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/AuthService";
@@ -10,21 +10,14 @@ import capsuleImg from "../capsule.png";
 
 const Navbar = () => {
   const router = useRouter();
-  const user = useUser();
+  const { user, setUser, isLoading } = useUser(); 
   const pathname = usePathname();
 
-  const [currentUser, setCurrentUser] = useState(user?.user || null);
-  const [userRole, setUserRole] = useState(user?.user?.role || undefined);
-
-  useEffect(() => {
-    setCurrentUser(user?.user);
-    setUserRole(user?.user?.role);
-  }, [user?.user]);
+  const userRole = user?.role; 
 
   const handleLogout = () => {
     logout();
-    setCurrentUser(null);
-    setUserRole(undefined);
+    setUser(null); 
     router.push("/login");
   };
 
@@ -34,6 +27,10 @@ const Navbar = () => {
       "text-black": pathname !== link,
     });
   };
+
+  if (isLoading) {
+    return <nav className="navbar bg-base-100 shadow-sm">Loading...</nav>;
+  }
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -57,7 +54,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
           >
             <li>
               <Link href="/" className={getLinkClass("/")}>
@@ -79,33 +76,35 @@ const Navbar = () => {
                 Cart
               </Link>
             </li>
-            <li>
-              {userRole === "customer" && (
+            {userRole === "customer" && (
+              <li>
                 <Link className={getLinkClass("/my-orders")} href="/my-orders">
                   Customer Dashboard
                 </Link>
-              )}
-            </li>
-            <li>
-              {userRole === "admin" && (
+              </li>
+            )}
+            {userRole === "admin" && (
+              <li>
                 <Link
                   className={getLinkClass("/manage-orders")}
                   href="/manage-orders"
                 >
                   Admin Dashboard
                 </Link>
-              )}
-            </li>
+              </li>
+            )}
           </ul>
         </div>
-        <a className="font-bold text-xl lg:text-3xl">MediMart</a>
+        <Link href="/" className="font-bold text-xl lg:text-3xl">
+          MediMart
+        </Link>
         <Image
           className="w-8 lg:w-12"
           src={capsuleImg}
           alt="logo"
           width={100}
           height={100}
-        ></Image>
+        />
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -130,36 +129,35 @@ const Navbar = () => {
               Cart
             </Link>
           </li>
-          <li>
-            {userRole === "customer" && (
+          {userRole === "customer" && (
+            <li>
               <Link className={getLinkClass("/my-orders")} href="/my-orders">
                 Customer Dashboard
               </Link>
-            )}
-            {userRole === "admin" && (
+            </li>
+          )}
+          {userRole === "admin" && (
+            <li>
               <Link
                 className={getLinkClass("/manage-medicines")}
                 href="/manage-medicines"
               >
                 Admin Dashboard
               </Link>
-            )}
-          </li>
+            </li>
+          )}
         </ul>
       </div>
 
       <div className="navbar-end">
-        {currentUser ? (
+        {user ? (
           <button onClick={handleLogout} className="btn btn-neutral">
             Logout
           </button>
         ) : (
-          <button
-            onClick={() => (window.location.href = "/login")}
-            className="btn-custom lg:w-1/5"
-          >
+          <Link href="/login" className="btn-custom lg:w-1/5">
             Login
-          </button>
+          </Link>
         )}
       </div>
     </div>

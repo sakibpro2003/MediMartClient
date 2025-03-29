@@ -7,7 +7,6 @@ export type TCart = {
   _id?: string;
   name?: string;
   product?:string,
-  // quantity: number,
   image?: string;
   description?: string;
   price?: number;
@@ -38,27 +37,31 @@ export const addToCart = async (payload:TCart) => {
     });
     return res.json();
   } catch (err: any) {
-    toast.error(err.message);
+   console.log(err)
   }
 };
 
-export const changePrescriptionStatus = async (status: boolean, _id: string) => {
+export const uploadProductImage = async (_id: string, file: File) => {
   const token = (await cookies()).get("accessToken")?.value;
+  
+  const formData = new FormData();
+  formData.append("image", file); // Attach the image file
+  
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/api/order/submit-prescription/${_id}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/api/products/upload/${_id}`,
       {
-        method: "PUT",
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // No need for Content-Type, fetch handles it automatically
         },
-        body: JSON.stringify({ status: status }),
+        body: formData, // Send FormData instead of JSON
       }
     );
+
     return res.json();
-  } catch (err: any) {
-    toast.error(err.message);
+  } catch (err) {
+    console.error("Upload error:", err);
   }
 };
 
@@ -140,7 +143,8 @@ export const getCartProducts = async () => {
     });
     return res.json();
   } catch (err: any) {
-    toast.error(err.message);
+    console.error("Fetch error:", err);
+
   }
 };
 export const removeItem = async (_id: string) => {
@@ -158,7 +162,8 @@ export const removeItem = async (_id: string) => {
     );
     return res.json();
   } catch (err: any) {
-    toast.error(err.message);
+    console.error("Fetch error:", err);
+
   }
 };
 

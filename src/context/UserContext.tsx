@@ -23,38 +23,26 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleUser = async () => {
-    try {
-      const userData = await getCurrentUser(); // get current user data from JWT
-      if (userData) {
-        // Map the JwtPayload to TUser type
-        // const user: TUser = {
-        //   ...userData,
-        //   email: userData.email || '',
-        //   _id: userData._id || '',
-        //   name: userData.name || '',
-        //   phone: userData.phone || '',
-        //   isBlocked: userData.isBlocked || false,
-        //   role: userData.role || "customer",
-        //   iat: userData.iat,
-        //   exp: userData.exp,
-        // };
-        setUser(user);
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      setUser(null); // set null in case of error
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const handleUser = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData){
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     handleUser();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, isLoading, setIsLoading, setUser }}>
+    <UserContext.Provider value={{ user, isLoading, setUser, setIsLoading }}>
       {children}
     </UserContext.Provider>
   );
@@ -62,7 +50,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useUser = () => {
   const context = useContext(UserContext);
-  if (context == undefined) {
+  if (context === undefined) {
     throw new Error("useUser must be used within a UserProvider");
   }
   return context;

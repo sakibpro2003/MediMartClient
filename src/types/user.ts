@@ -11,4 +11,5 @@ export type TUser = JwtPayload & {
   iat: number;
   exp: number;
   role: "customer" | "admin";
+
 };
