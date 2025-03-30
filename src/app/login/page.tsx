@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import {
@@ -28,11 +29,18 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (loginData) => {
-    const res = await loginUser(loginData);
-    if (res?.success === true) {
-      // console.log(res, "resssss");
+    try{
+      const res = await loginUser(loginData);
+      console.log(res)
+      if (res?.success === true) {
       toast.success("Login successful");
       router.push("/");
+    }
+      if (res?.success === false) {
+      toast.error(res.message);
+    }
+    }catch(err:any){
+      console.log(err)
     }
   };
 

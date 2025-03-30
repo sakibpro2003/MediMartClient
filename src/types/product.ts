@@ -5,7 +5,6 @@ export type TManufacturer = {
   };
   
   export type TProduct = {
-    _id: string;
     name:string,
     product:{
 
@@ -19,8 +18,8 @@ export type TManufacturer = {
     inStock: boolean;
     quantity: number;
     requiredPrescription: boolean;
-    expiryDate: string; // ISO 8601 string
+    expiryDate: string; 
     manufacturer: TManufacturer;
-    updated_at: string; // ISO 8601 string
+    updated_at: string; 
   };
   
