@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormControl,
@@ -18,9 +18,11 @@ import { registerUser } from "@/services/AuthService";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(registrationSchema),
@@ -34,12 +36,20 @@ const RegisterForm = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (userData) => {
-    const res = await registerUser(userData);
-    if (res?.success === true) {
-      toast.success("Registration successful!");
-      router.push("/login");
-    } else {
-      toast.error("Registration failed. Please try again.");
+    setLoading(true);
+    try {
+      const res = await registerUser(userData);
+      if (res?.success === true) {
+        toast.success("Registration successful!");
+        router.push("/login");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,14 +155,22 @@ const RegisterForm = () => {
               )}
             />
 
-            {/* Register Button */}
+            {/* Register Button with Loading */}
             <Button
-              className="w-full btn-custom text-white"
+              type="submit"
+              className="w-full btn-custom text-white flex justify-center items-center"
               disabled={
-                !password || !confirm_password || password !== confirm_password
+                loading || !password || !confirm_password || password !== confirm_password
               }
             >
-              Register
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                  Registering...
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
 
             {/* Login Redirect */}
