@@ -114,6 +114,7 @@ import { useEffect, useState } from "react";
 import { getOrders } from "@/services/Orders";
 import withCustomerAuth from "@/hoc/withCustomerAuth";
 import { TOrder } from "@/types/order";
+import Loader from "@/components/Loader";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState<TOrder[]>([]);
@@ -137,9 +138,7 @@ const MyOrders = () => {
 
   if (loading) {
     return (
-      <div className="text-center text-lg font-semibold mt-5">
-        Loading orders...
-      </div>
+     <Loader></Loader>
     );
   }
 

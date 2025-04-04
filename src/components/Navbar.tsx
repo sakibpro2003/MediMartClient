@@ -10,7 +10,7 @@ import capsuleImg from "../capsule.png";
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, setUser, isLoading } = useUser(); 
+  const { user, setUser } = useUser(); 
   const pathname = usePathname();
 
   const userRole = user?.role; 
@@ -28,9 +28,6 @@ const Navbar = () => {
     });
   };
 
-  if (isLoading) {
-    return <nav className="navbar bg-base-100 shadow-sm">Loading...</nav>;
-  }
 
   return (
     <div className="navbar bg-base-100 shadow-sm">

@@ -5,8 +5,10 @@ import { addToCart } from "@/services/Cart";
 import { getSingleProduct } from "@/services/Products";
 import Image from "next/image";
 import React, { useEffect, useState, use } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css";
+import { Loader2 } from "lucide-react";
+import Loader from "@/components/Loader";
 
 const ProductDetails = ({
   params,
@@ -16,6 +18,7 @@ const ProductDetails = ({
   const { productId } = use(params);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -38,6 +41,7 @@ const ProductDetails = ({
   };
 
   const handleAddToCart = async (id: string) => {
+    setIsAddingToCart(true); // Start loading
     const payload: TAddCart = { quantity: 1, product: id };
 
     try {
@@ -49,11 +53,13 @@ const ProductDetails = ({
       }
     } catch (err: any) {
       toast.error(err.message);
+    } finally {
+      setIsAddingToCart(false); 
     }
   };
 
   if (loading) {
-    return <div className="text-center text-gray-500">Loading...</div>;
+    return <Loader></Loader>;
   }
 
   if (!product) {
@@ -136,9 +142,17 @@ const ProductDetails = ({
 
       <button
         onClick={() => handleAddToCart(productId)}
-        className="mt-6 w-full py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-900 transition"
+        className="mt-6 w-full py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-900 transition flex justify-center items-center"
+        disabled={isAddingToCart}
       >
-        Add To Cart
+        {isAddingToCart ? (
+          <>
+            <Loader2 className="animate-spin mr-2 h-5 w-5" />
+            Adding to Cart...
+          </>
+        ) : (
+          "Add To Cart"
+        )}
       </button>
     </div>
   );
