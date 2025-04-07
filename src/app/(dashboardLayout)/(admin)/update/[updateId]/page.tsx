@@ -10,22 +10,6 @@ import { TProduct } from "@/types/product";
 const UpdateProductPage = () => {
   const router = useRouter();
   const { updateId } = useParams();
-
-  // const [product, setProduct] = useState({
-  //   name: "",
-  //   description: "",
-  //   price: "",
-  //   quantity: "",
-  //   expiryDate: "",
-  //   image: "",
-  //   inStock: false,
-  //   requiredPrescription: false,
-  //   manufacturer: {
-  //     name: "",
-  //     address: "",
-  //     contact: "",
-  //   },
-  // });
   const [product, setProduct] = useState<TProduct>({
     _id: "",
     name:"",
@@ -67,17 +51,6 @@ const UpdateProductPage = () => {
     fetchProduct();
   }, [updateId]);
 
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const { name, value, type, checked } = e.target;
-
-  //   setProduct((prev) => ({
-  //     ...prev,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   }));
-  // };
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -112,12 +85,12 @@ const UpdateProductPage = () => {
   };
 
   return (
-    <div className="p-8 bg-gray-50 rounded-lg shadow-xl max-w-5xl mx-auto">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    <div className="p-2 bg-gray-50 rounded-lg shadow-xl w-full mx-auto">
+      <h1 className="text-2xl font-bold text-gray-800 text-center">
         Update Product
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Product Name */}
         <div>
           <label className="font-semibold text-gray-700 mb-2 block">
@@ -126,7 +99,7 @@ const UpdateProductPage = () => {
           <input
             type="text"
             name="name"
-            value={product.name}
+            value={product?.name}
             onChange={handleChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -139,7 +112,7 @@ const UpdateProductPage = () => {
           </label>
           <textarea
             name="description"
-            value={product.description}
+            value={product?.description}
             onChange={handleChange}
             className="textarea textarea-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -153,7 +126,7 @@ const UpdateProductPage = () => {
           <input
             type="number"
             name="price"
-            value={product.price}
+            value={product?.price}
             onChange={handleChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -167,7 +140,7 @@ const UpdateProductPage = () => {
           <input
             type="number"
             name="quantity"
-            value={product.quantity}
+            value={product?.quantity}
             onChange={handleChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -181,7 +154,7 @@ const UpdateProductPage = () => {
           <input
             type="date"
             name="expiryDate"
-            value={product.expiryDate?.split("T")[0] || ""}
+            value={product?.expiryDate?.split("T")[0] || ""}
             onChange={handleChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -195,7 +168,7 @@ const UpdateProductPage = () => {
           <input
             type="text"
             name="image"
-            value={product.image}
+            value={product?.image}
             onChange={handleChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -206,7 +179,7 @@ const UpdateProductPage = () => {
           <input
             type="checkbox"
             name="inStock"
-            checked={product.inStock}
+            checked={product?.inStock}
             onChange={handleChange}
             className="checkbox checkbox-primary"
           />
@@ -218,7 +191,7 @@ const UpdateProductPage = () => {
           <input
             type="checkbox"
             name="requiredPrescription"
-            checked={product.requiredPrescription}
+            checked={product?.requiredPrescription}
             onChange={handleChange}
             className="checkbox checkbox-primary"
           />
@@ -235,7 +208,7 @@ const UpdateProductPage = () => {
           <input
             type="text"
             name="name"
-            value={product.manufacturer.name}
+            value={product?.manufacturer?.name}
             onChange={handleManufacturerChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -249,7 +222,7 @@ const UpdateProductPage = () => {
           <input
             type="text"
             name="address"
-            value={product.manufacturer.address}
+            value={product?.manufacturer?.address}
             onChange={handleManufacturerChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
@@ -263,7 +236,7 @@ const UpdateProductPage = () => {
           <input
             type="text"
             name="contact"
-            value={product.manufacturer.contact}
+            value={product?.manufacturer?.contact}
             onChange={handleManufacturerChange}
             className="input input-bordered w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />

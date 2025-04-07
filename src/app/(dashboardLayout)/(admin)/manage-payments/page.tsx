@@ -92,7 +92,7 @@ const ManagePayments = () => {
                         />
                         <div className="text-left">
                           <p className="font-semibold text-gray-700">
-                            {product.product?.name}
+                            {product?.product?.name}
                           </p>
                           <p className="text-xs text-gray-500">
                             Qty: {product.quantity} | ${product.totalPrice}

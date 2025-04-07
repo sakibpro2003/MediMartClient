@@ -41,7 +41,7 @@ const ProductDetails = ({
   };
 
   const handleAddToCart = async (id: string) => {
-    setIsAddingToCart(true); // Start loading
+    setIsAddingToCart(true); 
     const payload: TAddCart = { quantity: 1, product: id };
 
     try {

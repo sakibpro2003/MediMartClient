@@ -186,7 +186,7 @@ const MyOrders = () => {
                     {order.products.map((item) => (
                       <li key={item._id} className="flex items-center gap-2">
                         <div>
-                          <p className="font-medium">{item.product.name}</p>
+                          <p className="font-medium">{item?.product?.name}</p>
                           <p className="text-sm">
                             Quantity: {item.quantity} | Price: ${item.totalPrice}
                           </p>

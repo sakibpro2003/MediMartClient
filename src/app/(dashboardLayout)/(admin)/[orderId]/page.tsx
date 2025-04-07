@@ -4,7 +4,7 @@ import { TOrder } from "@/types/order";
 import Image from "next/image";
 
 const Page = async ({ params }: any) => {
-  const { orderId } = params;
+  const { orderId } = await params;
   const orders = await getUserSpecificOrder(orderId);
 
   return (
@@ -33,7 +33,7 @@ const Page = async ({ params }: any) => {
                     className="text-center hover:bg-gray-100 transition"
                   >
                     <td className="border px-3 py-2">{index + 1}</td>
-                    <td className="border px-3 py-2">{order.user.name}</td>
+                    <td className="border px-3 py-2">{order?.user?.name}</td>
                     <td className="border px-3 py-2 font-semibold">
                       ${order.totalAmount}
                     </td>
@@ -65,16 +65,16 @@ const Page = async ({ params }: any) => {
                           <Image
                             width={40}
                             height={40}
-                            src={product.product.image}
-                            alt={product.product.name}
+                            src={product?.product?.image || "link"}
+                            alt={product?.product?.name}
                             className="rounded shadow-md"
                           />
                           <div className="text-left">
                             <p className="font-semibold text-gray-700">
-                              {product.product.name}
+                              {product?.product?.name}
                             </p>
                             <p className="text-xs text-gray-500">
-                              Qty: {product.quantity} | ${product.totalPrice}
+                              Qty: {product?.quantity} | ${product?.totalPrice}
                             </p>
                           </div>
                         </div>

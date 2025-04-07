@@ -2,7 +2,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { toast } from "react-toastify";
 export type TCart = {
   _id?: string;
   name?: string;
@@ -45,7 +44,7 @@ export const uploadProductImage = async (_id: string, file: File) => {
   const token = (await cookies()).get("accessToken")?.value;
   
   const formData = new FormData();
-  formData.append("image", file); // Attach the image file
+  formData.append("image", file); 
   
   try {
     const res = await fetch(
@@ -53,9 +52,9 @@ export const uploadProductImage = async (_id: string, file: File) => {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`, // No need for Content-Type, fetch handles it automatically
+          Authorization: `Bearer ${token}`,
         },
-        body: formData, // Send FormData instead of JSON
+        body: formData, 
       }
     );
 

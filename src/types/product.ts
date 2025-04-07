@@ -5,6 +5,7 @@ export type TManufacturer = {
   };
   
   export type TProduct = {
+    _id?:string,
     name:string,
     product:{
 

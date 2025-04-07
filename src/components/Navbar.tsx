@@ -10,14 +10,14 @@ import capsuleImg from "../capsule.png";
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, setUser } = useUser(); 
+  const { user, setUser } = useUser();
   const pathname = usePathname();
 
-  const userRole = user?.role; 
+  const userRole = user?.role;
 
   const handleLogout = () => {
     logout();
-    setUser(null); 
+    setUser(null);
     router.push("/login");
   };
 
@@ -27,7 +27,6 @@ const Navbar = () => {
       "text-black": pathname !== link,
     });
   };
-
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -152,7 +151,7 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <Link href="/login" className="btn-custom lg:w-1/5">
+          <Link href="/login" className="btn btn-neutral">
             Login
           </Link>
         )}

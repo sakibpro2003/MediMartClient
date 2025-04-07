@@ -55,10 +55,10 @@ const ManageUsers = () => {
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td className="capitalize">{user.role}</td>
+                <td className="capitalize">{user?.role}</td>
                 <td>{user.phone || "No Phone"}</td>
                 <td>
-                  <span className={`badge ${user.isBlocked ? "badge-error" : "badge-success"}`}>
+                  <span className={`badge ${user?.isBlocked ? "badge-error" : "badge-success"}`}>
                     {user.isBlocked ? "Blocked" : "Active"}
                   </span>
                 </td>

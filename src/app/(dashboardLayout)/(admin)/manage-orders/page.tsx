@@ -13,7 +13,6 @@ const statusOptions = ["pending", "processing", "completed", "canceled"];
 const OrdersPage = () => {
   const [orders, setOrders] = useState<TOrder[]>([]);
 
-
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -29,8 +28,8 @@ const OrdersPage = () => {
   }, []);
 
   const handleStatusChange = async (orderId: string, newStatus: boolean) => {
-    setOrders((prevOrders:any) =>
-      prevOrders.map((order:TOrder) =>
+    setOrders((prevOrders: any) =>
+      prevOrders.map((order: TOrder) =>
         order._id === orderId ? { ...order, status: newStatus } : order
       )
     );
@@ -48,12 +47,11 @@ const OrdersPage = () => {
           <thead className="bg-black text-white text-xs">
             <tr>
               <th className="border px-2 py-2">#</th>
-              <th className="border px-2 py-2">Customer</th>
-              {/* <th className="border px-2 py-2">Email</th> */}
+              <th className="border px-2 py-2">Customer Name</th>
               <th className="border px-2 py-2">Total ($)</th>
               <th className="border px-2 py-2">Status</th>
               <th className="border px-2 py-2">Address</th>
-              {/* <th className="border px-2 py-2">Payment</th> */}
+              <th className="border px-2 py-2">Payment</th>
               <th className="border px-2 py-2">Products</th>
             </tr>
           </thead>
@@ -66,7 +64,6 @@ const OrdersPage = () => {
                 >
                   <td className="border px-2 py-2">{index + 1}</td>
                   <td className="border px-2 py-2">{order?.user?.name}</td>
-                  {/* <td className="border px-2 py-2">{order?.user?.email}</td> */}
                   <td className="border px-2 py-2 font-semibold">
                     ${order?.totalAmount}
                   </td>
@@ -105,8 +102,8 @@ const OrdersPage = () => {
                         <Image
                           width={40}
                           height={40}
-                          src={product.product.image}
-                          alt={product.product.name}
+                          src={product?.product?.image || "https://i.ibb.co.com/m5sgBFhq/advil-pain-relief-tablets-96-easy-to-swallow-tablets-39f3a1e1-c0c8-4fd1-993d-17420e40320c.png"}
+                          alt={"product_name"}
                           className="rounded shadow-md"
                         />
                         <div className="text-left">

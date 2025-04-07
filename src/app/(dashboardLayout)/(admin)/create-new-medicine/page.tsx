@@ -1,5 +1,4 @@
 "use client";
-
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { createProduct } from "@/services/Products";
 import { TProduct } from "@/types/product";
@@ -55,9 +54,8 @@ const ProductForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log('click')
     const res = await createProduct(product);
-    console.log(res,'res')
+    console.log(res, "res");
     if (res?.data) {
       toast.success("Medicine added succesfully");
       router.push("/manage-medicines");
