@@ -23,6 +23,8 @@ const ProductCard = () => {
 
   const searchParams = useSearchParams();
   const brandFilter = searchParams.get("brand");
+  const categoryQuery = searchParams.get("category");
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -59,8 +61,12 @@ const ProductCard = () => {
     }
 
     // Filters
-    if (categoryFilter)
-      updated = updated.filter((p) => p.category === categoryFilter);
+    // if (categoryFilter)
+    //   updated = updated.filter((p) => p.category === categoryFilter);
+    const effectiveCategory = categoryQuery || categoryFilter;
+if (effectiveCategory)
+  updated = updated.filter((p) => p.category === effectiveCategory);
+
     if (formFilter) updated = updated.filter((p) => p.form === formFilter);
     if (prescriptionFilter)
       updated = updated.filter(
@@ -95,6 +101,7 @@ const ProductCard = () => {
     prescriptionFilter,
     stockFilter,
     brandFilter,
+    categoryQuery,
   ]);
 
   if (loading) return <Loader />;

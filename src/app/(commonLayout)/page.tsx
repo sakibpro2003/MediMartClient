@@ -1,18 +1,20 @@
 "use client";
-import Banner from "@/components/Banner";
+// import Banner from "@/components/Banner";
 import Review from "./review/page";
 import Categories from "@/components/Category";
 import BrandSection from "@/components/BrandSection";
 import HomeBlogPreview from "@/components/BlogSection";
+import BannerSlider from "@/components/BannerSlider";
 // import BrandsSection from "@/components/BrandSection";
 
 const Home = () => {
   return (
     <div>
-      <Banner />
+      {/* <Banner /> */}
+      <BannerSlider></BannerSlider>
       <BrandSection></BrandSection>
-      <HomeBlogPreview></HomeBlogPreview>
       <Categories />
+      {/* <HomeBlogPreview></HomeBlogPreview> */}
       <Review />
     </div>
   );
