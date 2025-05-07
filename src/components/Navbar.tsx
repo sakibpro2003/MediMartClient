@@ -68,6 +68,11 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
+              <Link href="/blog" className={getLinkClass("/blog")}>
+                Blog
+              </Link>
+            </li>
+            <li>
               <Link href="/cart" className={getLinkClass("/cart")}>
                 Cart
               </Link>
@@ -120,6 +125,11 @@ const Navbar = () => {
               About
             </Link>
           </li>
+          <li>
+              <Link href="/blog" className={getLinkClass("/blog")}>
+                Blog
+              </Link>
+            </li>
           <li>
             <Link href="/cart" className={getLinkClass("/cart")}>
               Cart
