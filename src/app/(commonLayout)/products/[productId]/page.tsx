@@ -159,3 +159,90 @@ const ProductDetails = ({
 };
 
 export default ProductDetails;
+
+// /products/[productId]/page.tsx
+
+// import { getSingleProduct } from "@/services/Products";
+// import Image from "next/image";
+// import { Loader2, Star } from "lucide-react";
+// import AddToCartButton from "../../../../components/AddToCartButton"; // Create this separately
+// import { notFound } from "next/navigation";
+
+// const ProductDetailsPage = async ({
+//   params,
+// }: {
+//   params: { productId: string };
+// }) => {
+//   const response = await getSingleProduct(params.productId);
+//   const product = response?.data;
+
+//   if (!product) return notFound();
+
+//   return (
+//     <div className="w-11/12 max-w-6xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10 border border-gray-200">
+//       <div className="grid lg:grid-cols-2 gap-8">
+//         <div className="flex justify-center items-center">
+//           <Image
+//             width={350}
+//             height={350}
+//             src={product?.image || "/placeholder.jpg"}
+//             alt={product?.name || "Product Image"}
+//             className="rounded-xl border border-gray-300 shadow"
+//           />
+//         </div>
+
+//         <div className="text-black space-y-4">
+//           <h1 className="text-3xl font-bold">{product.name}</h1>
+//           <p className="text-gray-600">{product.description}</p>
+//           <div className="text-xl font-semibold border-b pb-2 border-gray-300">
+//             Price: ${product.price}
+//             {product.discount > 0 && (
+//               <span className="ml-4 text-green-600 text-sm font-medium">
+//                 {product.discount}% Off
+//               </span>
+//             )}
+//           </div>
+//           <div className="flex flex-wrap gap-3 text-sm text-gray-700">
+//             <p><strong>Dosage:</strong> {product.dosage}</p>
+//             <p><strong>Pack Size:</strong> {product.packSize}</p>
+//             <p><strong>Form:</strong> {product.form}</p>
+//             <p><strong>Category:</strong> {product.category}</p>
+//             <p><strong>Rating:</strong> 
+//               <span className="flex items-center gap-1 text-yellow-500">
+//                 <Star className="h-4 w-4 fill-yellow-500" /> {product.rating}
+//               </span>
+//             </p>
+//             <p><strong>Expiry:</strong> {new Date(product.expiryDate).toLocaleDateString()}</p>
+//             <p><strong>Quantity:</strong> {product.quantity}</p>
+//             <p>
+//               <strong>Status:</strong>{" "}
+//               <span className={`px-2 py-1 rounded-lg text-white text-xs ${
+//                 product.inStock ? "bg-black" : "bg-gray-500"
+//               }`}>
+//                 {product.inStock ? "In Stock" : "Out of Stock"}
+//               </span>
+//             </p>
+//             {product.requiredPrescription && (
+//               <p className="bg-gray-800 text-white px-2 py-1 rounded-lg text-xs">
+//                 Prescription Required
+//               </p>
+//             )}
+//           </div>
+
+//           <div className="pt-4 border-t border-gray-200 text-sm">
+//             <p><strong>Manufacturer:</strong> {product.manufacturer?.name}</p>
+//             {product.manufacturer?.address && <p><strong>Address:</strong> {product.manufacturer.address}</p>}
+//             {product.manufacturer?.contact && <p><strong>Contact:</strong> {product.manufacturer.contact}</p>}
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* CLIENT COMPONENT BUTTON */}
+//       <div className="mt-10">
+//         <AddToCartButton productId={product._id} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetailsPage;
