@@ -45,6 +45,8 @@ export const uploadProductImage = async (_id: string, file: File) => {
   
   const formData = new FormData();
   formData.append("image", file); 
+  console.log(formData)
+  
   
   try {
     const res = await fetch(

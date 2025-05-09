@@ -35,6 +35,7 @@ const RegisterForm = () => {
     defaultValues: {
       name: "",
       email: "",
+      profileImage: "",
       phone: "",
       password: "",
       confirm_password: "",
@@ -45,7 +46,9 @@ const RegisterForm = () => {
     setLoading(true);
     try {
       const res = await registerUser(userData);
+      console.log(userData, "user data reg");
       if (res?.success === true) {
+        // console.log(res,'res form')
         toast.success("Registration successful!");
         router.push("/login");
       } else {
@@ -133,6 +136,19 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
+              {/* <FormField
+                control={form.control}
+                name="profileImage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile Image URL</FormLabel>
+                    <FormControl>
+                      <Input {...field} value={field.value ?? ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
 
               {/* Password Field */}
               <FormField
@@ -168,8 +184,8 @@ const RegisterForm = () => {
                       />
                     </FormControl>
                     {password &&
-                      confirm_password &&
-                      password !== confirm_password ? (
+                    confirm_password &&
+                    password !== confirm_password ? (
                       <FormMessage>Passwords do not match!</FormMessage>
                     ) : (
                       <FormMessage />

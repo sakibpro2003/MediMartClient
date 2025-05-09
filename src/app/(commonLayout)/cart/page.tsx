@@ -86,6 +86,7 @@ const CartPage = () => {
     if (!selectedFile || !selectedItemId) return;
     setUploading(true);
     const res = await uploadProductImage(selectedItemId, selectedFile);
+    console.log(res,'upload image')
     if (res.message === "Product image updated successfully") {
       toast.success("Prescription uploaded successfully");
     }

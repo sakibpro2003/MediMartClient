@@ -17,6 +17,7 @@ export const registerUser = async (userData: FieldValues) => {
         body: JSON.stringify(userData),
       }
     );
+    // console.log(res,'res.json')
     return res.json();
   } catch (err: any) {
     toast.error(err.message);

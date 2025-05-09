@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -9,10 +10,16 @@ import withCustomerAuth from "@/hoc/withCustomerAuth";
 import Image from "next/image";
 
 const Profile = () => {
-  const [user, setUser] = useState<{ name: string; phone: string }>({
+  const [user, setUser] = useState<{
+    profileImage?: string;
+    coverImage?:string
+    name: string;
+    phone: string;
+  }>({
     name: "",
     phone: "",
   });
+
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
 
@@ -30,8 +37,11 @@ const Profile = () => {
       }
 
       const userProfile = await getUserProfile();
+      console.log(userProfile, "profiledetals");
       if (userProfile?.data) {
         setUser({
+          coverImage: userProfile.data.coverImage,
+          profileImage: userProfile.data.profileImage,
           name: userProfile.data.name || "",
           phone: userProfile.data.phone || "",
         });
@@ -47,16 +57,6 @@ const Profile = () => {
   };
 
   const handleSubmit = async () => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("accessToken="))
-      ?.split("=")[1];
-
-    if (!token) {
-      console.error("No token found");
-      return;
-    }
-
     setUpdating(true);
     try {
       const res = await updateUserInfo(user);
@@ -64,62 +64,52 @@ const Profile = () => {
         toast.success("Profile updated successfully!");
       }
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong");
     }
     setUpdating(false);
   };
 
-  if (loading) return <Loader></Loader>;
+
+  if (loading) return <Loader />;
 
   return (
     <div className="flex items-center w-full justify-center flex-col lg:p-6">
       <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
         My Profile
       </h2>
-      {/* <div className="w-full">
+
+      <div className="relative w-full mb-10">
         <Image
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRem_c2UVBTZckm9rh1AFynK8zXsEGpEsCaZg&s"
+        src={
+          user?.coverImage ||
+          "https://upload.wikimedia.org/wikipedia/commons/a/a6/No_picture_available_png.png"
+        }
           alt="Scenery Wallpaper"
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-full h-auto object-cover"
+          width={1920}
+          height={500} // approximate aspect ratio for banner
+          className="w-full h-[40vh] object-cover"
         />
-        <div className="relative left-1/2">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex flex-col items-center">
           <Image
-            className="rounded-full"
-            alt="dd"
-            width={250}
-            height={250}
+            alt="Profile Image"
             src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRem_c2UVBTZckm9rh1AFynK8zXsEGpEsCaZg&s"
+              user?.profileImage ||
+              "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
             }
-          ></Image>
+            width={150}
+            height={150}
+            className="w-[150px] h-[150px] rounded-full object-cover border-4 border-white shadow-lg"
+          />
+          {/* <button
+            onClick={() => setShowModal(true)}
+            className="btn mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Upload
+          </button> */}
         </div>
-      </div> */}
-   <div className="relative w-full mb-10">
-  <Image
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRem_c2UVBTZckm9rh1AFynK8zXsEGpEsCaZg&s"
-    alt="Scenery Wallpaper"
-    width={0}
-    height={0}
-    sizes="100vw"
-    className="w-full h-auto object-cover"
-  />
+      </div>
 
-  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-    <Image
-      alt="Profile Image"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRem_c2UVBTZckm9rh1AFynK8zXsEGpEsCaZg&s"
-      width={250}
-      height={250}
-      className="w-[150px] h-[150px] rounded-full object-cover border-4 border-white shadow-lg"
-    />
-  </div>
-</div>
-
-
-      <div className=" shadow-lg rounded-lg p-6 w-full">
+      <div className="shadow-lg rounded-lg p-6 w-full">
         <div className="mb-4">
           <label className="block text-gray-600 font-medium">Name</label>
           <input
@@ -141,17 +131,44 @@ const Profile = () => {
             className="w-full p-3 border border-gray-300 rounded-lg mt-1 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none"
           />
         </div>
+        <div className="mb-6">
+          <label className="block text-gray-600 font-medium">
+            Profile Image URL
+          </label>
+          <input
+            type="text"
+            name="profileImage"
+            value={user.profileImage}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg mt-1 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-600 font-medium">
+            Cover Image URL
+          </label>
+          <input
+            type="text"
+            name="coverImage"
+            value={user?.coverImage}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg mt-1 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none"
+          />
+        </div>
 
         <button
           onClick={handleSubmit}
           disabled={updating}
-          className={` btn-custom py-3 text-white font-semibold rounded-lg transition duration-200 ${
-            updating ? "bg-black cursor-not-allowed" : "bg-black-600"
+          className={`btn py-3 text-white font-semibold rounded-lg transition duration-200 ${
+            updating ? "bg-gray-400 cursor-not-allowed" : "bg-black"
           }`}
         >
           {updating ? "Updating..." : "Save Changes"}
         </button>
       </div>
+
+      {/* Upload Modal */}
+      
     </div>
   );
 };
