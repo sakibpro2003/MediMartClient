@@ -104,8 +104,14 @@ const categories: Category[] = [
   {
     name: "Antibiotic",
     description: "Medicines for treating various bacterial infections.",
-    image: "https://lloydspharmacy.ie/cdn/shop/articles/Flu_or_cold_Blog_Banner.jpg?v=1694613194",
+    image: "https://www.nsta.org/sites/default/files/2022-03/std_resist_1024.jpg",
     query: "Antibiotic",
+  },
+  {
+    name: "Cold & Cough",
+    description: "Medicines for treating various bacterial infections.",
+    image: "https://lloydspharmacy.ie/cdn/shop/articles/Flu_or_cold_Blog_Banner.jpg?v=1694613194",
+    query: "Cold",
   },
   {
     name: "Vitamin",
@@ -117,9 +123,9 @@ const categories: Category[] = [
 
 const Categories = () => {
   return (
-    <div className="max-w-7xl mx-auto p-4 mt-10">
+    <div className="w-11/12 mx-auto py-4 mt-10">
       <h2 className="text-4xl font-bold text-center mb-10">Our Medicine Categories</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category, index) => (
           <Link
             key={index}
