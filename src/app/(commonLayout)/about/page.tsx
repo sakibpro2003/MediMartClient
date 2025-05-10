@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { ShieldCheck, Clock, HeartPulse, Lock, CheckCircle } from "lucide-react";
+import { ShieldCheck, Clock, HeartPulse, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Us - MediStore",
-  description: "Learn more about MediStore and our commitment to healthcare excellence.",
+  title: "About Us - MediMart",
+  description: "Learn more about MediMart and our commitment to healthcare excellence.",
 };
 
 export default function AboutPage() {
@@ -11,9 +11,9 @@ export default function AboutPage() {
     <div className="bg-gradient-to-br from-white to-gray-50 text-gray-800">
       {/* Intro */}
       <section className="max-w-6xl mx-auto px-6 py-16 text-center">
-        <h1 className="text-5xl font-bold mb-4">Welcome to MediStore💊</h1>
+        <h1 className="text-5xl font-bold mb-4">Welcome to MediMart</h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          We're redefining how you access healthcare—delivering trust, quality, and convenience to your doorstep. 
+          We are redefining how you access healthcare—delivering trust, quality, and convenience to your doorstep. 
           From genuine medicines to 24/7 support, we’re here to put your health first.
         </p>
       </section>
@@ -33,7 +33,7 @@ export default function AboutPage() {
         <div className="bg-white p-8 rounded-xl shadow-lg border">
           <h3 className="text-2xl font-semibold text-green-600">Quality You Can Trust</h3>
           <p className="mt-4 text-gray-600">
-            All products on MediStore come from certified distributors and manufacturers, ensuring every order meets strict quality standards.
+            All products on MediMart come from certified distributors and manufacturers, ensuring every order meets strict quality standards.
           </p>
           <p className="mt-4 text-gray-600">
             Your well-being is our priority — every time, every order.
@@ -73,7 +73,7 @@ export default function AboutPage() {
 
       {/* Why Choose Us */}
       <section className="py-16 text-center">
-        <h2 className="text-3xl font-semibold mb-10">Why Choose MediStore?</h2>
+        <h2 className="text-3xl font-semibold mb-10">Why Choose MediMart?</h2>
         <div className="flex flex-wrap gap-6 justify-center max-w-4xl mx-auto">
           {[
             "Fast & Reliable Medicine Delivery",
@@ -94,7 +94,7 @@ export default function AboutPage() {
         <p className="text-lg text-gray-600 mb-6">We’re here 24/7 to assist you with anything you need.</p>
         <div className="flex flex-wrap justify-center gap-6">
           {[
-            { label: "Email", value: "support@medistore.com" },
+            { label: "Email", value: "support@medimart.com" },
             { label: "Phone", value: "+123-456-7890" },
             { label: "Live Chat", value: "Available 24/7" },
           ].map((contact, i) => (

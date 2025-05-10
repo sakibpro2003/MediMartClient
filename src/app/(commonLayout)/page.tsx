@@ -9,21 +9,10 @@ import HomeBlogPreview from "@/components/BlogSection";
 import BannerSlider from "@/components/BannerSlider";
 import Discount from "@/components/DiscountSection";
 import AboutSection from "@/components/AboutSection";
-// import Head from "next/head";
-// import BrandsSection from "@/components/BrandSection";
-// export async function generateMetadata(): Promise<Metadata> {
-//   const storeName = "MediStore"; // You can fetch this from an API
-//   return {
-//     title: `Welcome to ${storeName}`,
-//     description: "Home page for MediStore",
-//   };
-// }
+
 const Home = () => {
-  
   return (
     <div>
-     
-      
       {/* <Banner /> */}
       <BannerSlider></BannerSlider>
       <BrandSection></BrandSection>

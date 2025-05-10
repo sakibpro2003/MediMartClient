@@ -1,20 +1,12 @@
+import React, { Suspense } from "react";
+import ProductCard from "@/components/ProductCard";
+import { Metadata } from "next";
 
-
-// import ProductCard from '@/components/ProductCard';
-// import React from 'react';
-
-// const Page = () => {
-//   return (
-//     <div className=''>
-//       <ProductCard />
-//     </div>
-//   );
-// };
-
-// export default Page;
-
-import React, { Suspense } from 'react';
-import ProductCard from '@/components/ProductCard';
+export const metadata: Metadata = {
+  title: "Products - MediMart",
+  description:
+    "Learn more about MediMart and our commitment to healthcare excellence.",
+};
 
 const Page = () => {
   return (

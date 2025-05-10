@@ -1,29 +1,32 @@
-'use client';
+"use client";
 
-import { ShieldCheck, HeartPulse, Leaf, Users } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { ShieldCheck, HeartPulse, Leaf, Users } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 const features = [
   {
     icon: <ShieldCheck className="w-6 h-6 text-green-600" />,
-    title: 'Trusted Quality',
-    description: 'We ensure the highest standards of safety and effectiveness in every product.',
+    title: "Trusted Quality",
+    description:
+      "We ensure the highest standards of safety and effectiveness in every product.",
   },
   {
     icon: <HeartPulse className="w-6 h-6 text-red-500" />,
-    title: 'Health Focused',
-    description: 'Our mission is to improve your well-being through trusted healthcare products.',
+    title: "Health Focused",
+    description:
+      "Our mission is to improve your well-being through trusted healthcare products.",
   },
   {
     icon: <Leaf className="w-6 h-6 text-emerald-500" />,
-    title: 'Sustainable & Natural',
-    description: 'We promote eco-friendly practices and natural ingredients.',
+    title: "Sustainable & Natural",
+    description: "We promote eco-friendly practices and natural ingredients.",
   },
   {
     icon: <Users className="w-6 h-6 text-blue-500" />,
-    title: 'Customer First',
-    description: 'A dedicated team working to ensure your satisfaction and support.',
+    title: "Customer First",
+    description:
+      "A dedicated team working to ensure your satisfaction and support.",
   },
 ];
 
@@ -43,14 +46,13 @@ export default function AboutSection() {
 
         {/* Content Section */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Who We Are
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">Who We Are</h2>
           <p className="text-gray-600 mb-6">
-            At MediMart💊, we believe that healthcare should be accessible, reliable, and convenient.
-            Our platform bridges the gap between patients and trusted medical products, delivering
-            care that empowers lives. From essential medicines to expert support, we are committed to
-            keeping your health first.
+            At MediMart💊, we believe that healthcare should be accessible,
+            reliable, and convenient. Our platform bridges the gap between
+            patients and trusted medical products, delivering care that empowers
+            lives. From essential medicines to expert support, we are committed
+            to keeping your health first.
           </p>
 
           {/* Features */}
@@ -61,7 +63,9 @@ export default function AboutSection() {
                   {feature.icon}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-700">{feature.title}</h4>
+                  <h4 className="font-semibold text-gray-700">
+                    {feature.title}
+                  </h4>
                   <p className="text-sm text-gray-500">{feature.description}</p>
                 </div>
               </div>
@@ -69,7 +73,7 @@ export default function AboutSection() {
           </div>
 
           {/* CTA */}
-          <Link href={'/about'} className="btn-custom ">
+          <Link href={"/about"} className="btn-custom ">
             Learn More About Us
           </Link>
         </div>

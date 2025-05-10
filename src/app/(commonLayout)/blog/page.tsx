@@ -1,6 +1,13 @@
+import { Metadata } from "next";
 import { blogs } from "../../../../data/blogs";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Blog - MediMart",
+  description:
+    "Learn more about MediMart and our commitment to healthcare excellence.",
+};
 
 export default function BlogListPage() {
   return (
