@@ -25,7 +25,6 @@ const ProductCard = () => {
   const brandFilter = searchParams.get("brand");
   const categoryQuery = searchParams.get("category");
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -64,8 +63,8 @@ const ProductCard = () => {
     // if (categoryFilter)
     //   updated = updated.filter((p) => p.category === categoryFilter);
     const effectiveCategory = categoryQuery || categoryFilter;
-if (effectiveCategory)
-  updated = updated.filter((p) => p.category === effectiveCategory);
+    if (effectiveCategory)
+      updated = updated.filter((p) => p.category === effectiveCategory);
 
     if (formFilter) updated = updated.filter((p) => p.form === formFilter);
     if (prescriptionFilter)
@@ -210,8 +209,11 @@ if (effectiveCategory)
               selectedProducts.map((p) => (
                 <div
                   key={p._id}
-                  className="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4 flex flex-col justify-between"
+                  className="bg-white relative rounded-2xl shadow-md hover:shadow-xl transition p-4 flex flex-col justify-between"
                 >
+                  <span className="inline-flex absolute items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                    {p.discount}%
+                  </span>
                   <Image
                     src={p.image}
                     alt={p.name}
@@ -232,6 +234,7 @@ if (effectiveCategory)
                       {p.description}
                     </p>
                     <p className="font-bold text-green-600 mb-1">${p.price}</p>
+                    {/* <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Badge</span> */}
                     <div className="text-xs flex justify-between items-center mt-2">
                       <span className="text-gray-500">
                         {p.manufacturer?.name}
