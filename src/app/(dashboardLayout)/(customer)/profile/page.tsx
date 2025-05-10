@@ -97,7 +97,7 @@ const Profile = () => {
               "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
             }
             width={150}
-            height={150}
+            height={300}
             className="w-[150px] h-[150px] rounded-full object-cover border-4 border-white shadow-lg"
           />
           {/* <button

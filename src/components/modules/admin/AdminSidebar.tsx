@@ -53,6 +53,7 @@ const AdminSidebar = () => {
     { name: "Manage Orders", path: "/manage-orders" },
     { name: "Manage Users", path: "/manage-users" },
     { name: "Manage Payments", path: "/manage-payments" },
+    { name: "Home", path: "/" },
   ];
 
   return (

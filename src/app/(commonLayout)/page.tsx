@@ -9,6 +9,7 @@ import HomeBlogPreview from "@/components/BlogSection";
 import BannerSlider from "@/components/BannerSlider";
 import Discount from "@/components/DiscountSection";
 import AboutSection from "@/components/AboutSection";
+import Newsletter from "@/components/Newsletter";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <Categories />
       <Discount></Discount>
       <HomeBlogPreview></HomeBlogPreview>
+      <Newsletter></Newsletter>
       <AboutSection></AboutSection>
       <Review />
     </div>

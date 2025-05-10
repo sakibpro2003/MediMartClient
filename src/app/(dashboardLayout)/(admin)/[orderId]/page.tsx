@@ -14,7 +14,7 @@ const Page = async ({ params }: any) => {
       <div className="overflow-auto w-full">
         <div className="min-w-[800px]">
           <table className="w-full text-sm border border-gray-200">
-            <thead className="bg-blue-600 text-white text-xs">
+            <thead className="bg-black text-white text-xs">
               <tr>
                 <th className="border px-3 py-2">#</th>
                 <th className="border px-3 py-2">Customer</th>

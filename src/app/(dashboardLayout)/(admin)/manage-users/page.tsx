@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 const ManageUsers = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
@@ -50,15 +50,20 @@ const ManageUsers = () => {
 
         <tbody>
           {paginatedUsers.length > 0 ? (
-            paginatedUsers.map((user:TUser, index) => (
-              <tr key={user._id} className={`${user.isBlocked ? "bg-red-100" : ""}`}>
+            paginatedUsers.map((user: TUser, index) => (
+              <tr
+                key={user._id}
+                className={`${user.isBlocked ? "bg-red-100" : ""}`}
+              >
                 <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td className="capitalize">{user?.role}</td>
                 <td>{user.phone || "No Phone"}</td>
                 <td>
-                  <span className={`badge ${user?.isBlocked ? "badge-error" : "badge-success"}`}>
+                  <span
+                    className={`badge ${user?.isBlocked ? "badge-error" : "badge-success"}`}
+                  >
                     {user.isBlocked ? "Blocked" : "Active"}
                   </span>
                 </td>
@@ -90,9 +95,13 @@ const ManageUsers = () => {
         >
           Previous
         </button>
-        <span className="text-gray-700">Page {currentPage} of {totalPages}</span>
+        <span className="text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
         <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
           disabled={currentPage === totalPages}
           className="btn-custom disabled:opacity-50"
         >

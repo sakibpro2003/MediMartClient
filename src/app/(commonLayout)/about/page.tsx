@@ -21,7 +21,7 @@ export default function AboutPage() {
       {/* Mission Highlights */}
       <section className="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-2">
         <div className="bg-white p-8 rounded-xl shadow-lg border">
-          <h3 className="text-2xl font-semibold text-blue-600">Fast, Secure, and Reliable</h3>
+          <h3 className="text-2xl font-semibold">Fast, Secure, and Reliable</h3>
           <p className="mt-4 text-gray-600">
             Our state-of-the-art logistics network ensures quick and accurate deliveries across the country. 
             All transactions are secured with industry-standard encryption.
@@ -31,7 +31,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="bg-white p-8 rounded-xl shadow-lg border">
-          <h3 className="text-2xl font-semibold text-green-600">Quality You Can Trust</h3>
+          <h3 className="text-2xl font-semibold">Quality You Can Trust</h3>
           <p className="mt-4 text-gray-600">
             All products on MediMart come from certified distributors and manufacturers, ensuring every order meets strict quality standards.
           </p>

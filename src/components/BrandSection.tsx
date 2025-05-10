@@ -27,7 +27,7 @@ const brands = [
 
 const BrandSection = () => {
   return (
-    <section className="py-8 w-11/12 mx-auto">
+    <section className="py-8 w-11/12 mt-6 mx-auto">
       <h2 className="text-3xl text-center font-bold mb-6">Shop by Brand</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
         {brands.map((brand) => (

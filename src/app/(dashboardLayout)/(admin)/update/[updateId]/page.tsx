@@ -181,7 +181,7 @@ const UpdateProductPage = () => {
             name="inStock"
             checked={product?.inStock}
             onChange={handleChange}
-            className="checkbox checkbox-primary"
+            className="checkbox checkbox-neutral"
           />
           <label className="font-semibold text-gray-700">In Stock</label>
         </div>
@@ -245,7 +245,7 @@ const UpdateProductPage = () => {
 
       <div className="flex justify-center mt-6">
         <button
-          className="btn btn-primary py-2 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md focus:ring-2 focus:ring-blue-500"
+          className="btn btn-primary py-2 px-6 bg-black hover:bg-black/60 text-white rounded-lg shadow-md focus:ring-2 focus:ring-blue-500"
           onClick={handleUpdate}
         >
           Update Product

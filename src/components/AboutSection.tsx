@@ -32,7 +32,8 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <section className="bg-gradient-to-br from-gray-50 to-white py-16 px-6">
+    <section className="bg-gradient-to-br mt-6 from-gray-50 to-white py-16 px-6">
+      <h2 className="text-center text-3xl font-bold mb-6">About Us</h2>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Image Section */}
         <div className="relative w-full h-96">
@@ -46,7 +47,7 @@ export default function AboutSection() {
 
         {/* Content Section */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Who We Are</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Who We Are</h2>
           <p className="text-gray-600 mb-6">
             At MediMart💊, we believe that healthcare should be accessible,
             reliable, and convenient. Our platform bridges the gap between

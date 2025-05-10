@@ -4,7 +4,6 @@
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { getSuccessfulPayments } from "@/services/Orders";
 import { TProduct } from "@/types/product";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const ManagePayments = () => {
@@ -49,19 +48,19 @@ const ManagePayments = () => {
                   <td className="border px-3 py-2">{index + 1}</td>
                   <td className="border px-3 py-2">
                     <div className="text-left">
-                      <p className="font-semibold">{order.user.name}</p>
+                      <p className="font-semibold">{order?.user?.name}</p>
                       <p className="text-xs text-gray-500">
-                        {order.user.email}
+                        {order?.user?.email}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {order.user.phone}
+                        {order?.user?.phone}
                       </p>
                     </div>
                   </td>
                   <td className="border px-3 py-2 font-semibold">
-                    ${order.totalAmount}
+                    ${order?.totalAmount}
                   </td>
-                  <td className="border px-3 py-2">{order.paymentMethod}</td>
+                  <td className="border px-3 py-2">{order?.paymentMethod}</td>
                   <td
                     className={`border px-3 py-2 font-bold uppercase text-xs ${
                       order.status === "completed"
@@ -78,18 +77,11 @@ const ManagePayments = () => {
                     {new Date(order.updatedAt).toLocaleString()}
                   </td>
                   <td className="border px-3 py-2 text-left">
-                    {order.products.map((product:TProduct, i:number) => (
+                    {order.products.map((product: TProduct, i: number) => (
                       <div
                         key={i}
                         className="flex items-center space-x-2 border-b py-2"
                       >
-                        <Image
-                          width={40}
-                          height={40}
-                          src={product?.product?.image}
-                          alt={product.product?.name}
-                          className="rounded shadow-md"
-                        />
                         <div className="text-left">
                           <p className="font-semibold text-gray-700">
                             {product?.product?.name}

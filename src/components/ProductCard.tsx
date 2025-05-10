@@ -113,10 +113,10 @@ const ProductCard = () => {
   );
 
   return (
-    <div className="p-4 w-11/12 mx-auto">
+    <div className="p-4 w-11/12 mx-auto h-screen">
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar Filters */}
-        <div className="lg:w-1/4 w-full space-y-4">
+        <div className="lg:w-1/4 w-full p-4 border-2  rounded-md space-y-4">
           <div>
             <h3 className="font-bold text-xl mb-2">Search</h3>
             <input
@@ -200,7 +200,7 @@ const ProductCard = () => {
 
         {/* Products Grid */}
         <div className="lg:w-3/4 w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {selectedProducts.length === 0 ? (
               <p className="text-center col-span-full text-gray-500">
                 No products found
@@ -221,7 +221,7 @@ const ProductCard = () => {
                     height={200}
                     className="rounded-xl mx-auto"
                   />
-                  <div className="mt-4">
+                  <div className="mt-4 ">
                     <div className="flex items-center justify-between">
                       <h3 className="font-bold text-lg">{p.name}</h3>
                       {p.requiredPrescription && (
