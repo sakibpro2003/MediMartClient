@@ -12,13 +12,13 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
   return (
     <Link
       href={`/blog/${blog.blogSlug}`}
-      className="block bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
+      className="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition"
     >
       <Image
         src={blog.image}
         alt={blog.title}
-        width={200}
-        height={200}
+        width={400}
+        height={400}
         className="w-full h-40 object-cover"
       />
       <div className="p-4">

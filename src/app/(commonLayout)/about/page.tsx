@@ -1,3 +1,8 @@
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "About Us - MediStore",
+  description: "Learn more about MediStore and our commitment to healthcare excellence.",
+};
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-6 py-12 bg-white text-black">

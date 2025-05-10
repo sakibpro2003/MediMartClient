@@ -63,7 +63,7 @@ const ManagePayments = () => {
                   </td>
                   <td className="border px-3 py-2">{order.paymentMethod}</td>
                   <td
-                    className={`border px-3 py-2 font-bold uppercase text-xs py-1 ${
+                    className={`border px-3 py-2 font-bold uppercase text-xs ${
                       order.status === "completed"
                         ? "text-green-500"
                         : "text-red-500"
