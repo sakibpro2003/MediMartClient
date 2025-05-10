@@ -1,107 +1,108 @@
 import type { Metadata } from "next";
+import { ShieldCheck, Clock, HeartPulse, Lock, CheckCircle } from "lucide-react";
+
 export const metadata: Metadata = {
   title: "About Us - MediStore",
   description: "Learn more about MediStore and our commitment to healthcare excellence.",
 };
+
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-6 py-12 bg-white text-black">
-      <section className="text-center">
-        <h1 className="text-5xl font-bold">Who We Are</h1>
-        <p className="text-lg mt-4 max-w-3xl mx-auto">
-          At MediStore, we are redefining the way you access healthcare. Our
-          platform ensures seamless medicine delivery with authenticity,
-          affordability, and customer-first service.
+    <div className="bg-gradient-to-br from-white to-gray-50 text-gray-800">
+      {/* Intro */}
+      <section className="max-w-6xl mx-auto px-6 py-16 text-center">
+        <h1 className="text-5xl font-bold mb-4">Welcome to MediStore💊</h1>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          We're redefining how you access healthcare—delivering trust, quality, and convenience to your doorstep. 
+          From genuine medicines to 24/7 support, we’re here to put your health first.
         </p>
       </section>
 
-      <div className="mt-12 flex flex-col md:flex-row items-center gap-12">
-        <div className="md:w-1/2 bg-black p-6 rounded-lg text-white text-lg shadow-lg">
-          <h3 className="text-2xl font-semibold">Fast, Secure, and Reliable</h3>
-          <p className="mt-4">
-            Our advanced logistics system ensures timely deliveries, while our
-            encryption-backed transactions provide secure payments.
+      {/* Mission Highlights */}
+      <section className="max-w-6xl mx-auto px-6 py-12 grid gap-8 md:grid-cols-2">
+        <div className="bg-white p-8 rounded-xl shadow-lg border">
+          <h3 className="text-2xl font-semibold text-blue-600">Fast, Secure, and Reliable</h3>
+          <p className="mt-4 text-gray-600">
+            Our state-of-the-art logistics network ensures quick and accurate deliveries across the country. 
+            All transactions are secured with industry-standard encryption.
           </p>
-          <p className="mt-4">
-            With 24/7 customer support, you can always count on us for a
-            seamless healthcare experience.
-          </p>
-        </div>
-        <div className="md:w-1/2 bg-black p-6 rounded-lg text-white text-lg shadow-lg">
-          <h3 className="text-2xl font-semibold">Quality You Can Trust</h3>
-          <p className="mt-4">
-            We source our medicines from certified providers to ensure
-            authenticity and quality in every order.
-          </p>
-          <p className="mt-4">
-            Your health and safety are our top priorities. Your health and
-            safety are our top priorities.
+          <p className="mt-4 text-gray-600">
+            Around-the-clock customer support means we’re always here when you need us.
           </p>
         </div>
-      </div>
-
-      <section className="mt-16">
-        <h2 className="text-3xl font-semibold text-center">Our Core Values</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-6 bg-white shadow-md rounded-lg text-center border border-black">
-            <h3 className="text-xl font-semibold">Authenticity & Trust</h3>
-            <p className="mt-2">
-              We ensure genuine and certified medicines for your safety and
-              well-being.
-            </p>
-          </div>
-          <div className="p-6 bg-white shadow-md rounded-lg text-center border border-black">
-            <h3 className="text-xl font-semibold">Customer-First Approach</h3>
-            <p className="mt-2">
-              Your health comes first. Our 24/7 support is here to help anytime,
-              anywhere.
-            </p>
-          </div>
-          <div className="p-6 bg-white shadow-md rounded-lg text-center border border-black">
-            <h3 className="text-xl font-semibold">Innovation & Growth</h3>
-            <p className="mt-2">
-              We embrace technology to make healthcare more accessible and
-              affordable.
-            </p>
-          </div>
+        <div className="bg-white p-8 rounded-xl shadow-lg border">
+          <h3 className="text-2xl font-semibold text-green-600">Quality You Can Trust</h3>
+          <p className="mt-4 text-gray-600">
+            All products on MediStore come from certified distributors and manufacturers, ensuring every order meets strict quality standards.
+          </p>
+          <p className="mt-4 text-gray-600">
+            Your well-being is our priority — every time, every order.
+          </p>
         </div>
       </section>
 
-      <section className="mt-16 bg-black py-12 rounded-lg text-white">
-        <h2 className="text-3xl font-semibold text-center">
-          Why Choose MediStore?
-        </h2>
-        <div className="mt-8 flex flex-col p-3 md:flex-row gap-8 justify-center">
-          <div className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md text-black">
-            <span className="text-4xl">✔</span>
-            <p className="text-lg">Fast & Reliable Medicine Delivery</p>
-          </div>
-          <div className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md text-black">
-            <span className="text-4xl">✔</span>
-            <p className="text-lg">100% Genuine & Certified Products</p>
-          </div>
-          <div className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md text-black">
-            <span className="text-4xl">✔</span>
-            <p className="text-lg">Secure Online Payment & COD Options</p>
-          </div>
+      {/* Core Values */}
+      <section className="bg-white py-16 px-6">
+        <h2 className="text-3xl font-bold text-center mb-10">Our Core Values</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            {
+              icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
+              title: "Authenticity & Trust",
+              description: "Only genuine, verified medicines. No compromises."
+            },
+            {
+              icon: <HeartPulse className="w-8 h-8 text-red-500" />,
+              title: "Customer-First Approach",
+              description: "We’re here for you — anytime, anywhere."
+            },
+            {
+              icon: <Clock className="w-8 h-8 text-green-600" />,
+              title: "Innovation & Growth",
+              description: "Constantly evolving to improve your care experience."
+            }
+          ].map(({ icon, title, description }, i) => (
+            <div key={i} className="p-6 bg-gray-50 rounded-lg shadow-md text-center border">
+              <div className="mb-4 mx-auto w-fit">{icon}</div>
+              <h3 className="text-xl font-semibold mb-2">{title}</h3>
+              <p className="text-gray-600">{description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="mt-16 text-center">
-        <h2 className="text-3xl font-semibold">Need Help?</h2>
-        <p className="text-lg mt-3">
-          Our support team is available 24/7 to assist you.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-6">
-          <div className="p-4 bg-black text-white rounded-lg shadow-md">
-            <p>Email: support@medistore.com</p>
-          </div>
-          <div className="p-4 bg-black text-white rounded-lg shadow-md">
-            <p>Phone: +123-456-7890</p>
-          </div>
-          <div className="p-4 bg-black text-white rounded-lg shadow-md">
-            <p>Live Chat: Available 24/7</p>
-          </div>
+      {/* Why Choose Us */}
+      <section className="py-16 text-center">
+        <h2 className="text-3xl font-semibold mb-10">Why Choose MediStore?</h2>
+        <div className="flex flex-wrap gap-6 justify-center max-w-4xl mx-auto">
+          {[
+            "Fast & Reliable Medicine Delivery",
+            "100% Genuine & Certified Products",
+            "Secure Online Payment & COD Options",
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 p-5 rounded-lg shadow-md w-full md:w-[300px]">
+              <CheckCircle className="text-green-600 w-6 h-6" />
+              <p className="text-lg">{item}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Support Section */}
+      <section className="py-16 px-6 text-center">
+        <h2 className="text-3xl font-semibold mb-4">Need Help?</h2>
+        <p className="text-lg text-gray-600 mb-6">We’re here 24/7 to assist you with anything you need.</p>
+        <div className="flex flex-wrap justify-center gap-6">
+          {[
+            { label: "Email", value: "support@medistore.com" },
+            { label: "Phone", value: "+123-456-7890" },
+            { label: "Live Chat", value: "Available 24/7" },
+          ].map((contact, i) => (
+            <div key={i} className="p-5 bg-black text-white rounded-lg shadow-md">
+              <p className="text-sm uppercase text-gray-400">{contact.label}</p>
+              <p className="text-lg font-medium">{contact.value}</p>
+            </div>
+          ))}
         </div>
       </section>
     </div>

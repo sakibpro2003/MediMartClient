@@ -7,6 +7,8 @@ import Categories from "@/components/Category";
 import BrandSection from "@/components/BrandSection";
 import HomeBlogPreview from "@/components/BlogSection";
 import BannerSlider from "@/components/BannerSlider";
+import Discount from "@/components/DiscountSection";
+import AboutSection from "@/components/AboutSection";
 // import Head from "next/head";
 // import BrandsSection from "@/components/BrandSection";
 // export async function generateMetadata(): Promise<Metadata> {
@@ -26,7 +28,9 @@ const Home = () => {
       <BannerSlider></BannerSlider>
       <BrandSection></BrandSection>
       <Categories />
+      <Discount></Discount>
       <HomeBlogPreview></HomeBlogPreview>
+      <AboutSection></AboutSection>
       <Review />
     </div>
   );
