@@ -1,8 +1,5 @@
 "use client";
-// import type { Metadata } from "next";
 
-// import Banner from "@/components/Banner";
-import Review from "./review/page";
 import Categories from "@/components/Category";
 import BrandSection from "@/components/BrandSection";
 import HomeBlogPreview from "@/components/BlogSection";
@@ -10,6 +7,9 @@ import BannerSlider from "@/components/BannerSlider";
 import Discount from "@/components/DiscountSection";
 import AboutSection from "@/components/AboutSection";
 import Newsletter from "@/components/Newsletter";
+import { ReviewCard } from "@/components/ReviewCard";
+import { reviews } from "../../../data/reviews";
+import { Overview } from "@/components/Overview";
 
 const Home = () => {
   return (
@@ -20,9 +20,15 @@ const Home = () => {
       <Categories />
       <Discount></Discount>
       <HomeBlogPreview></HomeBlogPreview>
+      <Overview></Overview>
       <Newsletter></Newsletter>
       <AboutSection></AboutSection>
-      <Review />
+      <h2 className="text-3xl text-center mt-4 mb-6 font-bold">Customer Review</h2>
+       <div className="grid grid-cols-1 w-11/12 mx-auto sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {reviews.map((review) => (
+          <ReviewCard key={review.id} review={review} />
+        ))}
+      </div>
     </div>
   );
 };
